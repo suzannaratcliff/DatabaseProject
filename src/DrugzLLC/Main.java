@@ -15,11 +15,9 @@ import java.util.Optional;
 public class Main extends Application {
 
     public static Connection connection;
-    private Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        this.primaryStage = primaryStage;
+    public void start(Stage primaryStage) throws Exception {
         // Connect to the database
         connection = JDBCTools.connect("jdbc:sqlite:Pharmacy.db");
 

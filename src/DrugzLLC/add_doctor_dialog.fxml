@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="250" prefWidth="400" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.AddDoctorController">
+<StackPane prefHeight="250" prefWidth="400" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.AddDoctorDialogController">
 
     <VBox spacing="10">
         <padding>

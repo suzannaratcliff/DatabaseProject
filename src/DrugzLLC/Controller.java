@@ -23,6 +23,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+// TODO fix refresh
+
 public class Controller implements Initializable {
 
     @FXML
@@ -76,7 +78,7 @@ public class Controller implements Initializable {
         doctorTableView.getColumns().add(nameColumn);
     }
 
-    public void onPatientsPressed() {
+    public void onPatientsClicked() {
         currentTable = Table.Patients;
         // todo add filter to search bar
         searchBarTextField.setPromptText("Search patients last name");
@@ -157,6 +159,8 @@ public class Controller implements Initializable {
                 onDoctorsPressed();
                 break;
             case Patients:
+                showAddPatientDialog();
+                onPatientsClicked();
                 break;
             case Prescriptions:
                 break;
@@ -178,15 +182,33 @@ public class Controller implements Initializable {
             Scene scene = new Scene(stackPane);
 
             dialogStage.setScene(scene);
-            AddDoctorController addDoctorController = loader.getController();
-            addDoctorController.setDialogStage(dialogStage);
+            AddDoctorDialogController addDoctorDialogController = loader.getController();
+            addDoctorDialogController.setDialogStage(dialogStage);
             dialogStage.showAndWait();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void showAddPatientDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("add_patient_dialog.fxml"));
+            StackPane stackPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(stackPane);
+
+            dialogStage.setScene(scene);
+            AddPatientDialogController addPatientDialogController = loader.getController();
+            addPatientDialogController.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private ObservableList<Doctor> getDoctorObservableList(ResultSet resultSet) {
         ObservableList<Doctor> doctors = FXCollections.observableArrayList();
         try {
@@ -247,7 +269,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        onPatientsPressed();
+        onPatientsClicked();
     }
 
     private enum Table {

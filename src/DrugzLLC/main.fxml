@@ -28,7 +28,7 @@
             </padding>
 
             <HBox>
-                <Button minWidth="150" text="PATIENTS" onAction="#onPatientsPressed">
+                <Button minWidth="150" text="PATIENTS" onAction="#onPatientsClicked">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>

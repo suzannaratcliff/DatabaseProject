@@ -5,7 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddDoctorController {
+public class AddDoctorDialogController {
 
     public TextField nameTextField;
     public TextField locationTextField;
