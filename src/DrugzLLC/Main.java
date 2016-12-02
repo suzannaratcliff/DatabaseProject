@@ -21,9 +21,9 @@ public class Main extends Application {
         // Connect to the database
         connection = JDBCTools.connect("jdbc:sqlite:Pharmacy.db");
 
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         setUpWindow(primaryStage);
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
