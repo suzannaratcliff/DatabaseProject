@@ -6,20 +6,24 @@ import DrugzLLC.Tables.Prescription;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
-    private Connection connection;
 
     @FXML
     TableView<Doctor> doctorTableView;
@@ -27,14 +31,29 @@ public class Controller implements Initializable {
     TableView<Patient> patientTableView;
     @FXML
     TableView<Prescription> prescriptionTableView;
+    @FXML
+    TextField searchBarTextField;
 
+    Table currentTable = Table.Patients;
 
     public void onSearchComplete() {
-
-
+        switch (currentTable) {
+            case Doctors:
+                break;
+            case Patients:
+                break;
+            case Prescriptions:
+                break;
+            case have:
+                break;
+            case prescribe:
+                break;
+        }
     }
 
     public void onDoctorsPressed() {
+        currentTable = Table.Doctors;
+        searchBarTextField.setPromptText("Search doctors last name");
         doctorTableView.setVisible(true);
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(false);
@@ -50,7 +69,7 @@ public class Controller implements Initializable {
         TableColumn<Doctor, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.NAME));
 
-        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(connection, "Doctors")));
+        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Doctors.name())));
 
         doctorTableView.getColumns().add(idColumn);
         doctorTableView.getColumns().add(locationColumn);
@@ -58,6 +77,9 @@ public class Controller implements Initializable {
     }
 
     public void onPatientsPressed() {
+        currentTable = Table.Patients;
+        // todo add filter to search bar
+        searchBarTextField.setPromptText("Search patients last name");
         doctorTableView.setVisible(false);
         patientTableView.setVisible(true);
         prescriptionTableView.setVisible(false);
@@ -85,7 +107,7 @@ public class Controller implements Initializable {
         TableColumn<Patient, String> addressNameColumn = new TableColumn<>("Address");
         addressNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.ADDRESS));
 
-        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(connection, "Patients")));
+        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Patients.name())));
 
         patientTableView.getColumns().add(ssnColumn);
         patientTableView.getColumns().add(firstNameColumn);
@@ -97,6 +119,9 @@ public class Controller implements Initializable {
     }
 
     public void onPrescriptionsPressed() {
+        currentTable = Table.Prescriptions;
+        searchBarTextField.setPromptText("Search prescription #");
+
         doctorTableView.setVisible(false);
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(true);
@@ -118,11 +143,48 @@ public class Controller implements Initializable {
         TableColumn<Prescription, String> sideEffectsColumn = new TableColumn<>("Side Effects");
         sideEffectsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.SIDE_EFFECTS));
 
-        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(connection, "Prescriptions")));
+        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Prescriptions.name())));
 
         prescriptionTableView.getColumns().add(rxColumn);
         prescriptionTableView.getColumns().add(nameColumn);
         prescriptionTableView.getColumns().add(numSuppliedColumn);
+    }
+
+    public void onAddClicked() {
+        switch (currentTable) {
+            case Doctors:
+                showAddDoctorDialog();
+                onDoctorsPressed();
+                break;
+            case Patients:
+                break;
+            case Prescriptions:
+                break;
+            case have:
+                break;
+            case prescribe:
+                break;
+        }
+    }
+
+    private void showAddDoctorDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("add_doctor_dialog.fxml"));
+            StackPane stackPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(stackPane);
+
+            dialogStage.setScene(scene);
+            AddDoctorController addDoctorController = loader.getController();
+            addDoctorController.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private ObservableList<Doctor> getDoctorObservableList(ResultSet resultSet) {
@@ -185,8 +247,10 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Connect to the database
-        connection = JDBCTools.connect("jdbc:sqlite:Pharmacy.db");
+        onPatientsPressed();
+    }
 
+    private enum Table {
+        Patients, Prescriptions, Doctors, see, prescribe, have;
     }
 }

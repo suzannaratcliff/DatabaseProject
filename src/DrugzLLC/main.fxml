@@ -17,7 +17,7 @@
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <TextField onAction="#onSearchComplete" prefWidth="Infinity" promptText="Search patient"/>
+            <TextField  fx:id="searchBarTextField" onAction="#onSearchComplete" prefWidth="Infinity"/>
         </StackPane>
     </top>
 
@@ -28,14 +28,14 @@
             </padding>
 
             <HBox>
-                <Button minWidth="150" text="DOCTORS" onAction="#onDoctorsPressed">
+                <Button minWidth="150" text="PATIENTS" onAction="#onPatientsPressed">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="PATIENTS" onAction="#onPatientsPressed">
+                <Button minWidth="150" text="DOCTORS" onAction="#onDoctorsPressed">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
@@ -71,9 +71,9 @@
             <padding>
                 <Insets bottom="10" left="10" right="10"/>
             </padding>
-            <Button text="+">
+            <Button text="+" onAction="#onAddClicked">
                 <font>
-                    <Font size="14.0"/>
+                    <Font size="18.0"/>
                 </font>
             </Button>
 
