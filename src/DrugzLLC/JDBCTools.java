@@ -100,13 +100,13 @@ public class JDBCTools {
     //////////////////////////////////////////////////////////////////////
     //                         delete statements                        //
     //////////////////////////////////////////////////////////////////////
-    public static boolean deleteFromDoctor(Connection connection, int iD) {
+    public static boolean deleteFromDoctor(Connection connection, String iD) {
         String statementString = "DELETE From Doctors WHERE ID = ?";
 
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(statementString);
-            preparedStatement.setInt(1, iD);
+            preparedStatement.setString(1, iD);
 
             preparedStatement.executeUpdate();
             return true;
@@ -186,7 +186,7 @@ public class JDBCTools {
     }
 
     //////////////////////////////////////////////////////////////////////
-    //                         //TODO  other                            //
+    //                         other                                    //
     //////////////////////////////////////////////////////////////////////
     public static ResultSet retrieveAllItems(Connection connect, String tableName) {
         String queryStr = "SELECT * FROM " + tableName;
@@ -204,8 +204,8 @@ public class JDBCTools {
         return resultSet;
     }
 
-    public static boolean isItemInTable(Connection connect, String table, String item) {
-        String queryStr = "SELECT * FROM " + table + " WHERE lName = ?";
+    public static boolean isItemInTable(Connection connect, String table, String keyForItem, String item) {
+        String queryStr = "SELECT * FROM " + table + " WHERE " + keyForItem + " = ?";
 
         ResultSet resultSet = null;
 
@@ -214,8 +214,6 @@ public class JDBCTools {
             query = connect.prepareStatement(queryStr);
             query.setString(1, item);
 
-
-            // System.out.println(query.toString());
             resultSet = query.executeQuery();
 
             if(resultSet.next()) {
@@ -227,8 +225,8 @@ public class JDBCTools {
         return false;
     }
 
-    public static ResultSet getResultSetInDB(Connection connect, String table, String item) {
-        String queryStr = "SELECT * FROM "+ table + " WHERE lName = ?";
+    public static ResultSet getResultSetInDB(Connection connect, String table, String keyForItem, String item) {
+        String queryStr = "SELECT * FROM "+ table + " WHERE "+ keyForItem +" = ?";
         ResultSet resultSet = null;
 
         PreparedStatement query;

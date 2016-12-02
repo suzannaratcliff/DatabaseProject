@@ -10,15 +10,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.RadioButton?>
 <BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.101"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
     <top>
-        <StackPane>
+        <VBox spacing="10">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
             <TextField  fx:id="searchBarTextField" onAction="#onSearchComplete" prefWidth="Infinity"/>
-        </StackPane>
+            <!--<Group >-->
+                <!--<RadioButton text="Doctors">-->
+
+                <!--</RadioButton>-->
+                <!--<RadioButton text="Doc">-->
+
+                <!--</RadioButton>-->
+                <!--<RadioButton>-->
+
+                <!--</RadioButton>-->
+            <!--</Group>-->
+        </VBox>
     </top>
 
     <left>
@@ -71,7 +84,7 @@
             <padding>
                 <Insets bottom="10" left="10" right="10"/>
             </padding>
-            <Button text="-" onAction="#onDeleteClicked" visible="false" fx:id="deleteButton">
+            <Button text="-" onAction="#onDeleteClicked" fx:id="deleteButton">
                 <font>
                     <Font size="18.0"/>
                 </font>

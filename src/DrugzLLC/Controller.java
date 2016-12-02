@@ -3,17 +3,12 @@ package DrugzLLC;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -23,9 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
-// TODO fix refresh
 
 public class Controller implements Initializable {
 
@@ -40,41 +34,64 @@ public class Controller implements Initializable {
     public void onSearchComplete() {
         switch (currentTable) {
             case Doctors:
+                if (JDBCTools.isItemInTable(Main.connection, Table.Doctors.name(), Doctor.NAME_JDBC_KEY, searchBarTextField.getText())) {
+                    doctorTableView.setItems(getDoctorObservableList(JDBCTools.getResultSetInDB(
+                            Main.connection,
+                            Table.Doctors.name(),
+                            Doctor.NAME_JDBC_KEY,
+                            searchBarTextField.getText()
+                    )));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Doctor not found.");
+                    alert.showAndWait();
+                }
                 break;
             case Patients:
+                if (JDBCTools.isItemInTable(Main.connection, Table.Patients.name(), Patient.LNAME_JDBC_KEY, searchBarTextField.getText())) {
+                    patientTableView.setItems(getPatientObservableList(JDBCTools.getResultSetInDB(
+                            Main.connection, Table.Patients.name(),
+                            Patient.LNAME_JDBC_KEY,
+                            searchBarTextField.getText())));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Patient not found.");
+                    alert.showAndWait();
+                }
                 break;
             case Prescriptions:
+                if (JDBCTools.isItemInTable(Main.connection, Table.Prescriptions.name(), Prescription.RX_JDBC_KEY, searchBarTextField.getText())) {
+                    prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetInDB(
+                            Main.connection,
+                            Table.Prescriptions.name(),
+                            Prescription.RX_JDBC_KEY,
+                            searchBarTextField.getText())));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Patient not found.");
+                    alert.showAndWait();
+                }
                 break;
             case have:
                 break;
             case prescribe:
+                break;
+            case see:
                 break;
         }
     }
 
     public void onDoctorsClicked() {
         currentTable = Table.Doctors;
-        searchBarTextField.setPromptText("Search doctors last name");
+        searchBarTextField.setPromptText("Search doctors name");
         doctorTableView.setVisible(true);
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(false);
 
-        doctorTableView.getColumns().clear();
-
-        TableColumn<Doctor, String> idColumn = new TableColumn<>("ID Number");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.ID));
-
-        TableColumn<Doctor, String> locationColumn = new TableColumn<>("Location");
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.LOCATION));
-
-        TableColumn<Doctor, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.NAME));
-
         doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Doctors.name())));
-
-        doctorTableView.getColumns().add(idColumn);
-        doctorTableView.getColumns().add(locationColumn);
-        doctorTableView.getColumns().add(nameColumn);
     }
 
     public void onPatientsClicked() {
@@ -85,38 +102,7 @@ public class Controller implements Initializable {
         patientTableView.setVisible(true);
         prescriptionTableView.setVisible(false);
 
-        patientTableView.getColumns().clear();
-
-        TableColumn<Patient, String> ssnColumn = new TableColumn<>("Social Security Numer");
-        ssnColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.SSN));
-
-        TableColumn<Patient, String> firstNameColumn = new TableColumn<>("First Name");
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.FIRST_NAME));
-
-        TableColumn<Patient, String> middleNameColumn = new TableColumn<>("Middle Name");
-        middleNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.MIDDLE_NAME));
-
-        TableColumn<Patient, String> lastNameColumn = new TableColumn<>("Last Name");
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.LAST_NAME));
-
-        TableColumn<Patient, String> dateOfBirthColumn = new TableColumn<>("Date Of Birth");
-        dateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.DATE_OF_BIRTH));
-
-        TableColumn<Patient, String> insuranceNameColumn = new TableColumn<>("Insurance Company");
-        insuranceNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.INSURANCE_NAME));
-
-        TableColumn<Patient, String> addressNameColumn = new TableColumn<>("Address");
-        addressNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.ADDRESS));
-
         patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Patients.name())));
-
-        patientTableView.getColumns().add(ssnColumn);
-        patientTableView.getColumns().add(firstNameColumn);
-        patientTableView.getColumns().add(middleNameColumn);
-        patientTableView.getColumns().add(lastNameColumn);
-        patientTableView.getColumns().add(dateOfBirthColumn);
-        patientTableView.getColumns().add(insuranceNameColumn);
-        patientTableView.getColumns().add(addressNameColumn);
     }
 
     public void onPrescriptionsClicked() {
@@ -127,28 +113,7 @@ public class Controller implements Initializable {
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(true);
 
-        prescriptionTableView.getColumns().clear();
-
-        TableColumn<Prescription, Integer> rxColumn = new TableColumn<>("RX");
-        rxColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.RX));
-
-        TableColumn<Prescription, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.NAME));
-
-        TableColumn<Prescription, Integer> numSuppliedColumn = new TableColumn<>("Number Supplied");
-        numSuppliedColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.NUMBER_SUPPLIED));
-
-        TableColumn<Prescription, Integer> numRefillsColumn = new TableColumn<>("Number of Refills");
-        numRefillsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.NUMBER_REFILLS));
-
-        TableColumn<Prescription, String> sideEffectsColumn = new TableColumn<>("Side Effects");
-        sideEffectsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.SIDE_EFFECTS));
-
         prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Prescriptions.name())));
-
-        prescriptionTableView.getColumns().add(rxColumn);
-        prescriptionTableView.getColumns().add(nameColumn);
-        prescriptionTableView.getColumns().add(numSuppliedColumn);
     }
 
     public void onAddClicked() {
@@ -175,7 +140,23 @@ public class Controller implements Initializable {
     }
 
     public void onDeleteClicked() {
-        deleteSelectedItems();
+        switch (currentTable) {
+            case Doctors:
+                deleteSelectedDoctors();
+                break;
+            case Patients:
+                deleteSelectedPatients();
+                break;
+            case Prescriptions:
+                deleteSelectedPrescriptions();
+                break;
+            case have:
+                break;
+            case prescribe:
+                break;
+            case see:
+                break;
+        }
     }
 
     private void showAddDoctorDialog() {
@@ -235,7 +216,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void deleteSelectedItems() {
+    private void deleteSelectedPatients() {
         ObservableList<Patient> patientObservableList, allPatients;
         allPatients = patientTableView.getItems();
         patientObservableList = patientTableView.getSelectionModel().getSelectedItems();
@@ -246,6 +227,41 @@ public class Controller implements Initializable {
 
         patientObservableList.forEach(allPatients::remove);
 
+    }
+
+    private void deleteSelectedDoctors() {
+        // TODO remove check
+        if (doctorTableView.getSelectionModel().getSelectedItem() != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Doctor");
+            alert.setHeaderText("Are you sure you would like to delete " +
+                    doctorTableView.getSelectionModel().getSelectedItem().getName() + "?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                ObservableList<Doctor> doctorsObservableList, allDoctors;
+                allDoctors = doctorTableView.getItems();
+                doctorsObservableList = doctorTableView.getSelectionModel().getSelectedItems();
+                for (Doctor doctor : doctorsObservableList) {
+                    // delete from data base
+                    JDBCTools.deleteFromDoctor(Main.connection, doctor.getId());
+                }
+
+                doctorsObservableList.forEach(allDoctors::remove);
+            }
+        }
+    }
+
+    private void deleteSelectedPrescriptions() {
+        ObservableList<Prescription> prescriptionObservableList, allPrescriptions;
+        allPrescriptions = prescriptionTableView.getItems();
+        prescriptionObservableList = prescriptionTableView.getSelectionModel().getSelectedItems();
+        for (Prescription prescription : prescriptionObservableList) {
+            // delete from data base
+            JDBCTools.deleteFromPrescription(Main.connection, prescription.getRx());
+        }
+
+        prescriptionObservableList.forEach(allPrescriptions::remove);
     }
 
     private ObservableList<Doctor> getDoctorObservableList(ResultSet resultSet) {
@@ -305,16 +321,94 @@ public class Controller implements Initializable {
         return prescriptions;
     }
 
+    private void initDoctorTableView() {
+        doctorTableView.getColumns().clear();
+
+        TableColumn<Doctor, String> idColumn = new TableColumn<>("ID Number");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.ID));
+
+        TableColumn<Doctor, String> locationColumn = new TableColumn<>("Location");
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.LOCATION));
+
+        TableColumn<Doctor, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.NAME));
+
+        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Doctors.name())));
+
+        doctorTableView.getColumns().add(idColumn);
+        doctorTableView.getColumns().add(locationColumn);
+        doctorTableView.getColumns().add(nameColumn);
+    }
+
+    private void initPatientTableView() {
+        TableColumn<Patient, String> ssnColumn = new TableColumn<>("Social Security Numer");
+        ssnColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.SSN));
+
+        TableColumn<Patient, String> firstNameColumn = new TableColumn<>("First Name");
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.FIRST_NAME));
+
+        TableColumn<Patient, String> middleNameColumn = new TableColumn<>("Middle Name");
+        middleNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.MIDDLE_NAME));
+
+        TableColumn<Patient, String> lastNameColumn = new TableColumn<>("Last Name");
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.LAST_NAME));
+
+        TableColumn<Patient, String> dateOfBirthColumn = new TableColumn<>("Date Of Birth");
+        dateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.DATE_OF_BIRTH));
+
+        TableColumn<Patient, String> insuranceNameColumn = new TableColumn<>("Insurance Company");
+        insuranceNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.INSURANCE_NAME));
+
+        TableColumn<Patient, String> addressNameColumn = new TableColumn<>("Address");
+        addressNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.ADDRESS));
+
+        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Patients.name())));
+
+        patientTableView.getColumns().add(ssnColumn);
+        patientTableView.getColumns().add(firstNameColumn);
+        patientTableView.getColumns().add(middleNameColumn);
+        patientTableView.getColumns().add(lastNameColumn);
+        patientTableView.getColumns().add(dateOfBirthColumn);
+        patientTableView.getColumns().add(insuranceNameColumn);
+        patientTableView.getColumns().add(addressNameColumn);
+    }
+
+    private void initPrescriptionTableView() {
+        TableColumn<Prescription, Integer> rxColumn = new TableColumn<>("RX");
+        rxColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.RX));
+
+        TableColumn<Prescription, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.NAME));
+
+        TableColumn<Prescription, Integer> numSuppliedColumn = new TableColumn<>("Number Supplied");
+        numSuppliedColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.NUMBER_SUPPLIED));
+
+        TableColumn<Prescription, Integer> numRefillsColumn = new TableColumn<>("Number of Refills");
+        numRefillsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.NUMBER_REFILLS));
+
+        TableColumn<Prescription, String> sideEffectsColumn = new TableColumn<>("Side Effects");
+        sideEffectsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.SIDE_EFFECTS));
+
+        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Prescriptions.name())));
+
+        prescriptionTableView.getColumns().add(rxColumn);
+        prescriptionTableView.getColumns().add(nameColumn);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initDoctorTableView();
+        initPatientTableView();
+        initPrescriptionTableView();
+
         onPatientsClicked();
-        patientTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
-            @Override
-            public void changed(ObservableValue<? extends Patient> observable, Patient oldValue, Patient newValue) {
-                deleteButton.setVisible(true);
-                System.out.println(oldValue + " nv " + newValue);
-            }
-        });
+//        patientTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Patient> observable, Patient oldValue, Patient newValue) {
+//                deleteButton.setVisible(true);
+//                System.out.println(oldValue + " nv " + newValue);
+//            }
+//        });
     }
 
     private enum Table {
