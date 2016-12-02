@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    Connection connection;
+    private Connection connection;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -22,8 +22,10 @@ public class Main extends Application {
         connection = JDBCTools.connect("jdbc:sqlite:Pharmacy.db");
 
         setUpWindow(primaryStage);
+
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

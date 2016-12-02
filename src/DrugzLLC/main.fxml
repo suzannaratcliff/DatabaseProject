@@ -10,40 +10,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700" prefWidth="700" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
+<BorderPane prefHeight="700" prefWidth="700" xmlns="http://javafx.com/javafx/8.0.101"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
     <top>
         <StackPane>
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <TextField onAction="#onSearchComplete" prefWidth="Infinity" promptText="Search patient" />
+            <TextField onAction="#onSearchComplete" prefWidth="Infinity" promptText="Search patient"/>
         </StackPane>
     </top>
 
     <left>
         <VBox spacing="10">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
 
             <HBox>
-                <Button minWidth="150" text="DOCTORS">
+                <Button minWidth="150" text="DOCTORS" onAction="#onDoctorsPressed">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="PATIENTS">
+                <Button minWidth="150" text="PATIENTS" onAction="#onPatientsPressed">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="PRESCRIPTIONS">
+                <Button minWidth="150" text="PRESCRIPTIONS" onAction="#onPrescriptionsPressed">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
@@ -54,25 +55,28 @@
     <center>
         <StackPane>
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <TableView>
+            <TableView fx:id="doctorTableView" visible="false">
+            </TableView>
+            <TableView fx:id="prescriptionTableView" visible="false">
+            </TableView>
+            <TableView fx:id="patientTableView" visible="false">
             </TableView>
         </StackPane>
-
     </center>
 
     <bottom>
         <VBox alignment="CENTER_RIGHT">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="0" />
+                <Insets bottom="10" left="10" right="10"/>
             </padding>
             <Button text="+">
-            <font>
-               <Font size="14.0" />
-            </font></Button>
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Button>
 
         </VBox>
     </bottom>
-
 </BorderPane>
