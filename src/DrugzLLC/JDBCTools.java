@@ -101,14 +101,14 @@ public class JDBCTools {
     //                         delete statements                        //
     //////////////////////////////////////////////////////////////////////
     public static boolean deleteFromDoctor(Connection connection, int iD) {
-        String statementString = "DELETE From Tables.Doctor WHERE ID = ?";
+        String statementString = "DELETE From Doctors WHERE ID = ?";
 
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(statementString);
             preparedStatement.setInt(1, iD);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,14 +117,14 @@ public class JDBCTools {
     }
 
     public static boolean deleteFromPatient(Connection connection, String sSN) {
-        String statementString = "DELETE From Tables.Patient WHERE SSN = ?";
+        String statementString = "DELETE From Patients WHERE SSN = ?";
 
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(statementString);
             preparedStatement.setString(1, sSN);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,14 +133,14 @@ public class JDBCTools {
     }
 
     public static boolean deleteFromPrescription(Connection connection, int rX) {
-        String statementString = "DELETE From Tables.Prescription WHERE RX = ?";
+        String statementString = "DELETE From Prescriptions WHERE RX = ?";
 
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(statementString);
             preparedStatement.setInt(1, rX);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -152,7 +152,7 @@ public class JDBCTools {
     //                         update statements                        //
     //////////////////////////////////////////////////////////////////////
     public static boolean updateFrom(Connection connection, String tableName, String[] attributes, String[] values, String condition) {
-        String setUpdate = createSetUpdateSB(attributes, values);
+        String setUpdate = createSetUpdateString(attributes, values);
         String statementString = "UPDATE " + tableName + " SET " + setUpdate + " WHERE " + condition;
 
         PreparedStatement preparedStatement = null;
@@ -166,7 +166,7 @@ public class JDBCTools {
         return false;
     }
 
-    private static String createSetUpdateSB(String[] attributes, String[] values) {
+    private static String createSetUpdateString(String[] attributes, String[] values) {
         if (attributes.length != values.length) {
             throw new IllegalArgumentException("Attributes and values must be parallel arrays.");
         }

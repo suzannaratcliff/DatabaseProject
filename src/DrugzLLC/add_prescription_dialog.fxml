@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="375" prefWidth="450" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.AddPatientDialogController">
+<StackPane prefHeight="350" prefWidth="450" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.AddPrescriptionDialogController">
 
     <VBox spacing="10">
         <padding>
@@ -17,7 +17,7 @@
         </padding>
 
         <HBox alignment="CENTER">
-            <Label alignment="CENTER" text="Add Patient">
+            <Label alignment="CENTER" text="Add Prescription">
                 <font>
                     <Font name="System Bold" size="18.0" />
                 </font>
@@ -28,54 +28,40 @@
         </HBox>
 
         <HBox>
-            <Label minWidth="150" text="Social Security Number">
+            <Label minWidth="150" text="RX">
 
             </Label>
-            <TextField fx:id="ssnTextField" minWidth="280">
+            <TextField fx:id="rxTextField" minWidth="280">
 
             </TextField>
         </HBox>
         <HBox>
-            <Label minWidth="150" text="First Name">
+            <Label minWidth="150" text="Name">
 
             </Label>
-            <TextField fx:id="firstNameTextField" minWidth="280">
+            <TextField fx:id="nameTextField" minWidth="280">
 
             </TextField>
         </HBox>
         <HBox>
-            <Label minWidth="150" text="Middle Name">
+            <Label minWidth="150" text="Number Supplied">
 
             </Label>
-            <TextField fx:id="middleNameTextField" minWidth="280">
+            <TextField fx:id="numberSuppliedTextField" minWidth="280">
             </TextField>
         </HBox>
         <HBox>
-            <Label minWidth="150" text="Last Name">
+            <Label minWidth="150" text="Number of Refills">
 
             </Label>
-            <TextField fx:id="lastNameTextField" minWidth="280">
+            <TextField fx:id="numberRefillsTextField" minWidth="280">
             </TextField>
         </HBox>
         <HBox>
-            <Label minWidth="150" text="Date Of Birth">
+            <Label minWidth="150" text="Side Effects">
 
             </Label>
-            <TextField fx:id="dateOfBirthTextField" minWidth="280">
-            </TextField>
-        </HBox>
-        <HBox>
-            <Label minWidth="150" text="Insurance Company">
-
-            </Label>
-            <TextField fx:id="insuranceNameTextField" minWidth="280">
-            </TextField>
-        </HBox>
-        <HBox>
-            <Label minWidth="150" text="Address">
-
-            </Label>
-            <TextField fx:id="addressTextField" minWidth="280">
+            <TextField fx:id="sideEffectsTextField" minWidth="280">
             </TextField>
         </HBox>
     </VBox>

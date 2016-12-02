@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700" prefWidth="700" xmlns="http://javafx.com/javafx/8.0.101"
+<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.101"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
     <top>
         <StackPane>
@@ -35,14 +35,14 @@
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="DOCTORS" onAction="#onDoctorsPressed">
+                <Button minWidth="150" text="DOCTORS" onAction="#onDoctorsClicked">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="PRESCRIPTIONS" onAction="#onPrescriptionsPressed">
+                <Button minWidth="150" text="PRESCRIPTIONS" onAction="#onPrescriptionsClicked">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
@@ -67,16 +67,21 @@
     </center>
 
     <bottom>
-        <VBox alignment="CENTER_RIGHT">
+        <HBox alignment="BOTTOM_RIGHT" spacing="10">
             <padding>
                 <Insets bottom="10" left="10" right="10"/>
             </padding>
+            <Button text="-" onAction="#onDeleteClicked" visible="false" fx:id="deleteButton">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+            </Button>
             <Button text="+" onAction="#onAddClicked">
                 <font>
                     <Font size="18.0"/>
                 </font>
             </Button>
 
-        </VBox>
+        </HBox>
     </bottom>
 </BorderPane>

@@ -3,12 +3,14 @@ package DrugzLLC;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,16 +29,13 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    @FXML
-    TableView<Doctor> doctorTableView;
-    @FXML
-    TableView<Patient> patientTableView;
-    @FXML
-    TableView<Prescription> prescriptionTableView;
-    @FXML
-    TextField searchBarTextField;
+    public TableView<Doctor> doctorTableView;
+    public TableView<Patient> patientTableView;
+    public TableView<Prescription> prescriptionTableView;
+    public TextField searchBarTextField;
+    public Button deleteButton;
 
-    Table currentTable = Table.Patients;
+    private Table currentTable = Table.Patients;
 
     public void onSearchComplete() {
         switch (currentTable) {
@@ -53,7 +52,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void onDoctorsPressed() {
+    public void onDoctorsClicked() {
         currentTable = Table.Doctors;
         searchBarTextField.setPromptText("Search doctors last name");
         doctorTableView.setVisible(true);
@@ -120,7 +119,7 @@ public class Controller implements Initializable {
         patientTableView.getColumns().add(addressNameColumn);
     }
 
-    public void onPrescriptionsPressed() {
+    public void onPrescriptionsClicked() {
         currentTable = Table.Prescriptions;
         searchBarTextField.setPromptText("Search prescription #");
 
@@ -156,19 +155,27 @@ public class Controller implements Initializable {
         switch (currentTable) {
             case Doctors:
                 showAddDoctorDialog();
-                onDoctorsPressed();
+                onDoctorsClicked();
                 break;
             case Patients:
                 showAddPatientDialog();
                 onPatientsClicked();
                 break;
             case Prescriptions:
+                showAddPrescriptionDialog();
+                onPrescriptionsClicked();
                 break;
             case have:
                 break;
             case prescribe:
                 break;
+            case see:
+                break;
         }
+    }
+
+    public void onDeleteClicked() {
+        deleteSelectedItems();
     }
 
     private void showAddDoctorDialog() {
@@ -208,7 +215,39 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-    
+
+    private void showAddPrescriptionDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("add_prescription_dialog.fxml"));
+            StackPane stackPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(stackPane);
+
+            dialogStage.setScene(scene);
+            AddPrescriptionDialogController addPrescriptionDialogController = loader.getController();
+            addPrescriptionDialogController.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteSelectedItems() {
+        ObservableList<Patient> patientObservableList, allPatients;
+        allPatients = patientTableView.getItems();
+        patientObservableList = patientTableView.getSelectionModel().getSelectedItems();
+        for (Patient patient : patientObservableList) {
+            // delete from data base
+            JDBCTools.deleteFromPatient(Main.connection, patient.getSsn());
+        }
+
+        patientObservableList.forEach(allPatients::remove);
+
+    }
+
     private ObservableList<Doctor> getDoctorObservableList(ResultSet resultSet) {
         ObservableList<Doctor> doctors = FXCollections.observableArrayList();
         try {
@@ -266,10 +305,16 @@ public class Controller implements Initializable {
         return prescriptions;
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         onPatientsClicked();
+        patientTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
+            @Override
+            public void changed(ObservableValue<? extends Patient> observable, Patient oldValue, Patient newValue) {
+                deleteButton.setVisible(true);
+                System.out.println(oldValue + " nv " + newValue);
+            }
+        });
     }
 
     private enum Table {
