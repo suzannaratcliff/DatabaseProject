@@ -101,7 +101,6 @@ public class Controller implements Initializable {
 
     public void onPatientsClicked() {
         currentTable = Table.Patients;
-        // todo add filter to search bar
         searchBarTextField.setPromptText("Search patients last name");
         userFeedBackLabel.setText("");
 
@@ -253,11 +252,11 @@ public class Controller implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("add_doctor_dialog.fxml"));
-            StackPane stackPane = loader.load();
+            AnchorPane anchorPane = loader.load();
 
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
-            Scene scene = new Scene(stackPane);
+            Scene scene = new Scene(anchorPane);
 
             dialogStage.setScene(scene);
             AddDoctorDialogController addDoctorDialogController = loader.getController();
