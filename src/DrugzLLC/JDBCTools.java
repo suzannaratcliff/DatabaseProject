@@ -1,8 +1,6 @@
 package DrugzLLC;
 
-import DrugzLLC.Tables.Doctor;
-import DrugzLLC.Tables.Patient;
-import DrugzLLC.Tables.Prescription;
+import DrugzLLC.Tables.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,6 +42,60 @@ public class JDBCTools {
             preparedStatement.setString(1, doctor.getId());
             preparedStatement.setString(2, doctor.getLocation());
             preparedStatement.setString(3, doctor.getName());
+
+            // execute insert SQL statement
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean insertIntoSee(Connection connection, See see) {
+        String statementString = "INSERT INTO see VALUES (?,?)";
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(statementString);
+            preparedStatement.setString(1, see.getId());
+            preparedStatement.setString(2, see.getsSN());
+
+            // execute insert SQL statement
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean insertIntoHave(Connection connection, Have have) {
+        String statementString = "INSERT INTO have VALUES (?,?)";
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(statementString);
+            preparedStatement.setString(1, have.getsSN());
+            preparedStatement.setInt(2, have.getrX());
+
+            // execute insert SQL statement
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean insertIntoPrescripe(Connection connection, Prescribe prescribe) {
+        String statementString = "INSERT INTO prescribe VALUES (?,?)";
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(statementString);
+            preparedStatement.setInt(1, prescribe.getrX());
+            preparedStatement.setInt(2, prescribe.getiD());
 
             // execute insert SQL statement
             preparedStatement.executeUpdate();
