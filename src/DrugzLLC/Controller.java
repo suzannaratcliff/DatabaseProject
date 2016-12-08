@@ -33,7 +33,7 @@ public class Controller implements Initializable {
     public TableView<Patient> patientTableView;
     public TableView<Prescription> prescriptionTableView;
     public TextField searchBarTextField;
-    public Button deleteButton;
+    public Label deleteButton;
 
     public Button prescribeButton;
     public Button haveButton;
@@ -573,6 +573,18 @@ public class Controller implements Initializable {
         alert.setTitle("Error");
         alert.setHeaderText(header);
         alert.showAndWait();
+    }
+
+    public void onAddSeeClicked() {
+
+    }
+
+    public void onAddPrescibeClicked() {
+
+    }
+
+    public void onAddHaveClicked() {
+
     }
 
     @Override
