@@ -33,7 +33,7 @@ public class AddPrescriptionDialogController {
                 sideEffectsTextField.getText()
         );
 
-        boolean inserted = JDBCTools.insertIntoPrescription(Main.connection, prescription);
+        boolean inserted = JDBCTools.insertIntoPrescription(Main.getConnection(), prescription);
         if (inserted) {
             dialogStage.close();
         } else {

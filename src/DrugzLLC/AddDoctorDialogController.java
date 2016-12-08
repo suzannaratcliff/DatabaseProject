@@ -22,8 +22,8 @@ public class AddDoctorDialogController {
     }
 
     public void onAddClicked() {
-        Doctor doctor = new Doctor(idNumberTextField.getText(), locationTextField.getText(), idNumberTextField.getText());
-        boolean inserted = JDBCTools.insertIntoDoctor(Main.connection, doctor);
+        Doctor doctor = new Doctor(idNumberTextField.getText(), locationTextField.getText(), nameTextField.getText());
+        boolean inserted = JDBCTools.insertIntoDoctor(Main.getConnection(), doctor);
         if (inserted) {
             dialogStage.close();
         } else {

@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    public static Connection connection;
+    // omg singleton :(
+    private static Connection connection;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -49,6 +50,10 @@ public class Main extends Application {
             JDBCTools.disconnect(connection);
             primaryStage.close();
         }
+    }
+
+    public static Connection getConnection() {
+        return connection;
     }
 
     public static void main(String[] args) {

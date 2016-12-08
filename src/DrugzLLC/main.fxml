@@ -62,6 +62,33 @@
                 </Button>
             </HBox>
 
+            <HBox>
+                <Button fx:id="seeButton" minWidth="150" text="SEE" onAction="#onSeeClicked"
+                visible="false">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+            </HBox>
+
+            <HBox>
+                <Button fx:id="haveButton" minWidth="150" text="HAVE" onAction="#onHaveClicked"
+                visible="false">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+            </HBox>
+
+            <HBox>
+                <Button fx:id="prescribeButton" minWidth="150" text="PRESCRIBE" onAction="#onPrescribeClicked"
+                visible="false">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+            </HBox>
+
         </VBox>
     </left>
 

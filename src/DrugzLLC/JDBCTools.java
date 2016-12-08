@@ -241,4 +241,20 @@ public class JDBCTools {
         return resultSet;
     }
 
+    public static ResultSet getResultSetNaturalJoinInDB(Connection connect, String mainTable, String relationshipTable, String keyForItem, String item) {
+        String queryStr = "SELECT * FROM "+ mainTable + " JOIN " + relationshipTable + " WHERE " + relationshipTable + "." + keyForItem + " = ?";
+        ResultSet resultSet = null;
+
+        PreparedStatement query;
+        try {
+            query = connect.prepareStatement(queryStr);
+            query.setString(1, item);
+            resultSet = query.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
 }

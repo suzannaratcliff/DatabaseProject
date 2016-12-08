@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,50 +30,45 @@ public class Controller implements Initializable {
     public TextField searchBarTextField;
     public Button deleteButton;
 
-    private Table currentTable = Table.Patients;
+    public Button prescribeButton;
+    public Button haveButton;
+    public Button seeButton;
+
+    private Table currentTable;
 
     public void onSearchComplete() {
         switch (currentTable) {
             case Doctors:
-                if (JDBCTools.isItemInTable(Main.connection, Table.Doctors.name(), Doctor.NAME_JDBC_KEY, searchBarTextField.getText())) {
+                if (JDBCTools.isItemInTable(Main.getConnection(), Table.Doctors.name(), Doctor.NAME_JDBC_KEY, searchBarTextField.getText())) {
                     doctorTableView.setItems(getDoctorObservableList(JDBCTools.getResultSetInDB(
-                            Main.connection,
+                            Main.getConnection(),
                             Table.Doctors.name(),
                             Doctor.NAME_JDBC_KEY,
                             searchBarTextField.getText()
                     )));
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Doctor not found.");
-                    alert.showAndWait();
+                    showErrorAlertDialog("Doctor not found.");
                 }
                 break;
             case Patients:
-                if (JDBCTools.isItemInTable(Main.connection, Table.Patients.name(), Patient.LNAME_JDBC_KEY, searchBarTextField.getText())) {
+                if (JDBCTools.isItemInTable(Main.getConnection(), Table.Patients.name(), Patient.LNAME_JDBC_KEY, searchBarTextField.getText())) {
                     patientTableView.setItems(getPatientObservableList(JDBCTools.getResultSetInDB(
-                            Main.connection, Table.Patients.name(),
+                            Main.getConnection(), Table.Patients.name(),
                             Patient.LNAME_JDBC_KEY,
                             searchBarTextField.getText())));
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Patient not found.");
-                    alert.showAndWait();
+                    showErrorAlertDialog("Patient not found.");
                 }
                 break;
             case Prescriptions:
-                if (JDBCTools.isItemInTable(Main.connection, Table.Prescriptions.name(), Prescription.RX_JDBC_KEY, searchBarTextField.getText())) {
+                if (JDBCTools.isItemInTable(Main.getConnection(), Table.Prescriptions.name(), Prescription.RX_JDBC_KEY, searchBarTextField.getText())) {
                     prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetInDB(
-                            Main.connection,
+                            Main.getConnection(),
                             Table.Prescriptions.name(),
                             Prescription.RX_JDBC_KEY,
                             searchBarTextField.getText())));
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Patient not found.");
-                    alert.showAndWait();
+                    showErrorAlertDialog("Prescription not found.");
                 }
                 break;
             case have:
@@ -87,11 +83,16 @@ public class Controller implements Initializable {
     public void onDoctorsClicked() {
         currentTable = Table.Doctors;
         searchBarTextField.setPromptText("Search doctors name");
+
         doctorTableView.setVisible(true);
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(false);
 
-        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Doctors.name())));
+        haveButton.setVisible(false);
+        seeButton.setVisible(false);
+        prescribeButton.setVisible(true);
+
+        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Doctors.name())));
     }
 
     public void onPatientsClicked() {
@@ -102,18 +103,77 @@ public class Controller implements Initializable {
         patientTableView.setVisible(true);
         prescriptionTableView.setVisible(false);
 
-        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Patients.name())));
+        prescribeButton.setVisible(false);
+        haveButton.setVisible(true);
+        seeButton.setVisible(true);
+
+        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Patients.name())));
     }
 
     public void onPrescriptionsClicked() {
         currentTable = Table.Prescriptions;
         searchBarTextField.setPromptText("Search prescription #");
 
+        prescribeButton.setVisible(false);
+        haveButton.setVisible(false);
+        seeButton.setVisible(false);
+
         doctorTableView.setVisible(false);
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(true);
 
-        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Prescriptions.name())));
+        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Prescriptions.name())));
+    }
+
+    public void onSeeClicked() {
+        Patient patient = patientTableView.getSelectionModel().getSelectedItem();
+// todo show label of who was searched for
+        if (patient != null) {
+            onDoctorsClicked();
+            // check for num??
+            doctorTableView.setItems(getDoctorObservableList(JDBCTools.getResultSetNaturalJoinInDB(
+                    Main.getConnection(),
+                    Table.Doctors.name(),
+                    Table.see.name(),
+                    Patient.SSN_JDBC_KEY,
+                    patient.getSsn()
+            )));
+        }
+
+
+    }
+
+    public void onHaveClicked() {
+        Patient patient = patientTableView.getSelectionModel().getSelectedItem();
+// todo show label of who was searched for
+        if (patient != null) {
+            onPrescriptionsClicked();
+           // check for num????
+            prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
+                    Main.getConnection(),
+                    Table.Prescriptions.name(),
+                    Table.have.name(),
+                    Patient.SSN_JDBC_KEY,
+                    patient.getSsn()
+            )));
+        }
+
+    }
+
+    public void onPrescribeClicked() {
+        Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
+        if(doctor != null) {
+            onPrescriptionsClicked();
+            prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
+                    Main.getConnection(),
+                    Table.Prescriptions.name(),
+                    Table.prescribe.name(),
+                    Doctor.ID_JDBC_KEY,
+                    doctor.getId()
+            )));
+        }
+
+
     }
 
     public void onAddClicked() {
@@ -166,12 +226,13 @@ public class Controller implements Initializable {
             StackPane stackPane = loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(stackPane);
 
             dialogStage.setScene(scene);
             AddDoctorDialogController addDoctorDialogController = loader.getController();
             addDoctorDialogController.setDialogStage(dialogStage);
+
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -182,11 +243,11 @@ public class Controller implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("add_patient_dialog.fxml"));
-            StackPane stackPane = loader.load();
+            AnchorPane anchorPane = loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(stackPane);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(anchorPane);
 
             dialogStage.setScene(scene);
             AddPatientDialogController addPatientDialogController = loader.getController();
@@ -204,7 +265,7 @@ public class Controller implements Initializable {
             StackPane stackPane = loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(stackPane);
 
             dialogStage.setScene(scene);
@@ -222,7 +283,7 @@ public class Controller implements Initializable {
         patientObservableList = patientTableView.getSelectionModel().getSelectedItems();
         for (Patient patient : patientObservableList) {
             // delete from data base
-            JDBCTools.deleteFromPatient(Main.connection, patient.getSsn());
+            JDBCTools.deleteFromPatient(Main.getConnection(), patient.getSsn());
         }
 
         patientObservableList.forEach(allPatients::remove);
@@ -244,7 +305,7 @@ public class Controller implements Initializable {
                 doctorsObservableList = doctorTableView.getSelectionModel().getSelectedItems();
                 for (Doctor doctor : doctorsObservableList) {
                     // delete from data base
-                    JDBCTools.deleteFromDoctor(Main.connection, doctor.getId());
+                    JDBCTools.deleteFromDoctor(Main.getConnection(), doctor.getId());
                 }
 
                 doctorsObservableList.forEach(allDoctors::remove);
@@ -258,7 +319,7 @@ public class Controller implements Initializable {
         prescriptionObservableList = prescriptionTableView.getSelectionModel().getSelectedItems();
         for (Prescription prescription : prescriptionObservableList) {
             // delete from data base
-            JDBCTools.deleteFromPrescription(Main.connection, prescription.getRx());
+            JDBCTools.deleteFromPrescription(Main.getConnection(), prescription.getRx());
         }
 
         prescriptionObservableList.forEach(allPrescriptions::remove);
@@ -333,7 +394,7 @@ public class Controller implements Initializable {
         TableColumn<Doctor, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.NAME));
 
-        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Doctors.name())));
+        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Doctors.name())));
 
         doctorTableView.getColumns().add(idColumn);
         doctorTableView.getColumns().add(locationColumn);
@@ -362,7 +423,7 @@ public class Controller implements Initializable {
         TableColumn<Patient, String> addressNameColumn = new TableColumn<>("Address");
         addressNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.ADDRESS));
 
-        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Patients.name())));
+        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Patients.name())));
 
         patientTableView.getColumns().add(ssnColumn);
         patientTableView.getColumns().add(firstNameColumn);
@@ -389,10 +450,20 @@ public class Controller implements Initializable {
         TableColumn<Prescription, String> sideEffectsColumn = new TableColumn<>("Side Effects");
         sideEffectsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.SIDE_EFFECTS));
 
-        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.connection, Table.Prescriptions.name())));
+        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Prescriptions.name())));
 
         prescriptionTableView.getColumns().add(rxColumn);
         prescriptionTableView.getColumns().add(nameColumn);
+        prescriptionTableView.getColumns().add(numSuppliedColumn);
+        prescriptionTableView.getColumns().add(numRefillsColumn);
+        prescriptionTableView.getColumns().add(sideEffectsColumn);
+    }
+
+    private void showErrorAlertDialog(String header) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.showAndWait();
     }
 
     @Override

@@ -2,6 +2,7 @@ package DrugzLLC;
 
 import DrugzLLC.Tables.Patient;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -14,6 +15,7 @@ public class AddPatientDialogController {
     public TextField dateOfBirthTextField;
     public TextField insuranceNameTextField;
     public TextField addressTextField;
+    public DatePicker dobDatePicker;
 
     private Stage dialogStage;
 
@@ -31,12 +33,12 @@ public class AddPatientDialogController {
                 firstNameTextField.getText(),
                 middleNameTextField.getText(),
                 lastNameTextField.getText(),
-                dateOfBirthTextField.getText(),
+                dobDatePicker.getValue().toString(),
                 insuranceNameTextField.getText(),
                 addressTextField.getText()
         );
 
-        boolean inserted = JDBCTools.insertIntoPatient(Main.connection, patient);
+        boolean inserted = JDBCTools.insertIntoPatient(Main.getConnection(), patient);
         if (inserted) {
             dialogStage.close();
         } else {
