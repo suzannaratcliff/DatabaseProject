@@ -1,5 +1,8 @@
 package DrugzLLC;
 
+import DrugzLLC.AddDialogs.AddDoctorDialogController;
+import DrugzLLC.AddDialogs.AddPatientDialogController;
+import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
@@ -11,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -251,7 +253,7 @@ public class Controller implements Initializable {
     private void showAddDoctorDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("add_doctor_dialog.fxml"));
+            loader.setLocation(getClass().getResource("AddDialogs/add_doctor_dialog.fxml"));
             AnchorPane anchorPane = loader.load();
 
             Stage dialogStage = new Stage();
@@ -271,7 +273,7 @@ public class Controller implements Initializable {
     private void showAddPatientDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("add_patient_dialog.fxml"));
+            loader.setLocation(getClass().getResource("AddDialogs/add_patient_dialog.fxml"));
             AnchorPane anchorPane = loader.load();
 
             Stage dialogStage = new Stage();
@@ -313,12 +315,12 @@ public class Controller implements Initializable {
     private void showAddPrescriptionDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("add_prescription_dialog.fxml"));
-            StackPane stackPane = loader.load();
+            loader.setLocation(getClass().getResource("AddDialogs/add_prescription_dialog.fxml"));
+            AnchorPane anchorPane = loader.load();
 
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
-            Scene scene = new Scene(stackPane);
+            Scene scene = new Scene(anchorPane);
 
             dialogStage.setScene(scene);
             AddPrescriptionDialogController addPrescriptionDialogController = loader.getController();

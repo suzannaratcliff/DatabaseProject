@@ -1,5 +1,7 @@
-package DrugzLLC;
+package DrugzLLC.AddDialogs;
 
+import DrugzLLC.JDBCTools;
+import DrugzLLC.Main;
 import DrugzLLC.Tables.Doctor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

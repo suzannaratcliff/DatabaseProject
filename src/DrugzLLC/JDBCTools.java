@@ -35,7 +35,7 @@ public class JDBCTools {
     //////////////////////////////////////////////////////////////////////
     //                         insert statements                        //
     //////////////////////////////////////////////////////////////////////
-    protected static boolean insertIntoDoctor(Connection connection, Doctor doctor) {
+    public static boolean insertIntoDoctor(Connection connection, Doctor doctor) {
         String statementString = "INSERT INTO Doctors VALUES (?,?,?)";
 
         PreparedStatement preparedStatement = null;

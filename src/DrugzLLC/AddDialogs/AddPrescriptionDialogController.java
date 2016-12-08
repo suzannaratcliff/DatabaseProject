@@ -1,7 +1,11 @@
-package DrugzLLC;
+package DrugzLLC.AddDialogs;
 
+import DrugzLLC.JDBCTools;
+import DrugzLLC.Main;
 import DrugzLLC.Tables.Prescription;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,8 +19,13 @@ public class AddPrescriptionDialogController {
 
     private Stage dialogStage;
 
+    public Button positiveButton;
+    public Label dialogTitle;
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+        positiveButton.setText("ADD");
+        dialogTitle.setText("Add Prescription");
     }
 
     public void onCancelClicked() {
