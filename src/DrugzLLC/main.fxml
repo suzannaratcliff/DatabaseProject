@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,81 +11,68 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.RadioButton?>
-<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.101"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
+<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
     <top>
         <VBox spacing="10">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <TextField  fx:id="searchBarTextField" onAction="#onSearchComplete" prefWidth="Infinity"/>
-            <!--<Group >-->
-                <!--<RadioButton text="Doctors">-->
-
-                <!--</RadioButton>-->
-                <!--<RadioButton text="Doc">-->
-
-                <!--</RadioButton>-->
-                <!--<RadioButton>-->
-
-                <!--</RadioButton>-->
-            <!--</Group>-->
+            <TextField fx:id="searchBarTextField" onAction="#onSearchComplete" prefWidth="Infinity" />
+            <Label fx:id="userFeedBackLabel" prefWidth="Infinity" textAlignment="CENTER">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
         </VBox>
     </top>
 
     <left>
         <VBox spacing="10">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
 
             <HBox>
-                <Button minWidth="150" text="PATIENTS" onAction="#onPatientsClicked">
+                <Button minWidth="150" onAction="#onPatientsClicked" text="PATIENTS">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="DOCTORS" onAction="#onDoctorsClicked">
+                <Button minWidth="150" onAction="#onDoctorsClicked" text="DOCTORS">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
             </HBox>
             <HBox>
-                <Button minWidth="150" text="PRESCRIPTIONS" onAction="#onPrescriptionsClicked">
+                <Button minWidth="150" onAction="#onPrescriptionsClicked" text="PRESCRIPTIONS">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Button>
-            </HBox>
-
-            <HBox>
-                <Button fx:id="seeButton" minWidth="150" text="SEE" onAction="#onSeeClicked"
-                visible="false">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
             </HBox>
 
             <HBox>
-                <Button fx:id="haveButton" minWidth="150" text="HAVE" onAction="#onHaveClicked"
-                visible="false">
+                <Button fx:id="seeButton" minWidth="150" onAction="#onSeeClicked" text="SEE" visible="false">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
             </HBox>
 
             <HBox>
-                <Button fx:id="prescribeButton" minWidth="150" text="PRESCRIBE" onAction="#onPrescribeClicked"
-                visible="false">
+                <Button fx:id="haveButton" minWidth="150" onAction="#onHaveClicked" text="HAVE" visible="false">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+            </HBox>
+
+            <HBox>
+                <Button fx:id="prescribeButton" minWidth="150" onAction="#onPrescribeClicked" text="PRESCRIBE" visible="false">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
             </HBox>
@@ -95,7 +83,7 @@
     <center>
         <StackPane>
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
             <TableView fx:id="doctorTableView" visible="false">
             </TableView>
@@ -109,16 +97,16 @@
     <bottom>
         <HBox alignment="BOTTOM_RIGHT" spacing="10">
             <padding>
-                <Insets bottom="10" left="10" right="10"/>
+                <Insets bottom="10" left="10" right="10" />
             </padding>
-            <Button text="-" onAction="#onDeleteClicked" fx:id="deleteButton">
+            <Button fx:id="deleteButton" onAction="#onDeleteClicked" text="-">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Button>
-            <Button text="+" onAction="#onAddClicked">
+            <Button onAction="#onAddClicked" text="+">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Button>
 

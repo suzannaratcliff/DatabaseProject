@@ -36,7 +36,10 @@ public class Controller implements Initializable {
 
     private Table currentTable;
 
+    public Label userFeedBackLabel;
+
     public void onSearchComplete() {
+        userFeedBackLabel.setText("Search results for: " +  searchBarTextField.getText());
         switch (currentTable) {
             case Doctors:
                 if (JDBCTools.isItemInTable(Main.getConnection(), Table.Doctors.name(), Doctor.NAME_JDBC_KEY, searchBarTextField.getText())) {
@@ -83,6 +86,7 @@ public class Controller implements Initializable {
     public void onDoctorsClicked() {
         currentTable = Table.Doctors;
         searchBarTextField.setPromptText("Search doctors name");
+        userFeedBackLabel.setText("");
 
         doctorTableView.setVisible(true);
         patientTableView.setVisible(false);
@@ -99,6 +103,8 @@ public class Controller implements Initializable {
         currentTable = Table.Patients;
         // todo add filter to search bar
         searchBarTextField.setPromptText("Search patients last name");
+        userFeedBackLabel.setText("");
+
         doctorTableView.setVisible(false);
         patientTableView.setVisible(true);
         prescriptionTableView.setVisible(false);
@@ -113,6 +119,7 @@ public class Controller implements Initializable {
     public void onPrescriptionsClicked() {
         currentTable = Table.Prescriptions;
         searchBarTextField.setPromptText("Search prescription #");
+        userFeedBackLabel.setText("");
 
         prescribeButton.setVisible(false);
         haveButton.setVisible(false);
@@ -130,6 +137,8 @@ public class Controller implements Initializable {
 // todo show label of who was searched for
         if (patient != null) {
             onDoctorsClicked();
+            userFeedBackLabel.setText("Showing which doctor(s) patient : " + patient.getLastName() + " sees.");
+
             // check for num??
             doctorTableView.setItems(getDoctorObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
@@ -148,7 +157,8 @@ public class Controller implements Initializable {
 // todo show label of who was searched for
         if (patient != null) {
             onPrescriptionsClicked();
-           // check for num????
+            userFeedBackLabel.setText("Showing which prescription(s) patient : " + patient.getLastName() + " has.");
+            // check for num????
             prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Prescriptions.name(),
@@ -164,6 +174,7 @@ public class Controller implements Initializable {
         Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
         if(doctor != null) {
             onPrescriptionsClicked();
+            userFeedBackLabel.setText("Showing which prescription(s) doctor : " + doctor.getName() + " prescribes.");
             prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Prescriptions.name(),
@@ -172,8 +183,6 @@ public class Controller implements Initializable {
                     doctor.getId()
             )));
         }
-
-
     }
 
     public void onAddClicked() {
