@@ -387,15 +387,25 @@ public class Controller implements Initializable {
     }
 
     private void deleteSelectedPatients() {
-        ObservableList<Patient> patientObservableList, allPatients;
-        allPatients = patientTableView.getItems();
-        patientObservableList = patientTableView.getSelectionModel().getSelectedItems();
-        for (Patient patient : patientObservableList) {
-            // delete from data base
-            JDBCTools.deleteFromPatient(Main.getConnection(), patient.getSsn());
-        }
+        if(patientTableView.getSelectionModel().getSelectedItem() != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Patient");
+            alert.setHeaderText("Are you sure you would like to delete " +
+                    patientTableView.getSelectionModel().getSelectedItem().getLastName() + "?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
 
-        patientObservableList.forEach(allPatients::remove);
+                ObservableList<Patient> patientObservableList, allPatients;
+                allPatients = patientTableView.getItems();
+                patientObservableList = patientTableView.getSelectionModel().getSelectedItems();
+                for (Patient patient : patientObservableList) {
+                    // delete from data base
+                    JDBCTools.deleteFromPatient(Main.getConnection(), patient.getSsn());
+                }
+
+                patientObservableList.forEach(allPatients::remove);
+            }
+        }
 
     }
 
@@ -423,15 +433,25 @@ public class Controller implements Initializable {
     }
 
     private void deleteSelectedPrescriptions() {
-        ObservableList<Prescription> prescriptionObservableList, allPrescriptions;
-        allPrescriptions = prescriptionTableView.getItems();
-        prescriptionObservableList = prescriptionTableView.getSelectionModel().getSelectedItems();
-        for (Prescription prescription : prescriptionObservableList) {
-            // delete from data base
-            JDBCTools.deleteFromPrescription(Main.getConnection(), prescription.getRx());
-        }
+        if (prescriptionTableView.getSelectionModel().getSelectedItem() != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Prescription");
+            alert.setHeaderText("Are you sure you would like to delete " +
+                    prescriptionTableView.getSelectionModel().getSelectedItem().getName() + "?");
 
-        prescriptionObservableList.forEach(allPrescriptions::remove);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                ObservableList<Prescription> prescriptionObservableList, allPrescriptions;
+                allPrescriptions = prescriptionTableView.getItems();
+                prescriptionObservableList = prescriptionTableView.getSelectionModel().getSelectedItems();
+                for (Prescription prescription : prescriptionObservableList) {
+                    // delete from data base
+                    JDBCTools.deleteFromPrescription(Main.getConnection(), prescription.getRx());
+                }
+
+                prescriptionObservableList.forEach(allPrescriptions::remove);
+            }
+        }
     }
 
     private ObservableList<Doctor> getDoctorObservableList(ResultSet resultSet) {

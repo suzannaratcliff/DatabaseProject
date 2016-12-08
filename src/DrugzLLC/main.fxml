@@ -102,8 +102,8 @@
                     <Insets bottom="10" left="10" right="10"/>
                 </padding>
 
-                <VBox alignment="CENTER" spacing="5">
-                    <ImageView fx:id="addHaveButton" fitHeight="25" fitWidth="25" onMouseClicked="#onAddHaveClicked">
+                <VBox alignment="CENTER" spacing="5" onMouseClicked="#onAddHaveClicked">
+                    <ImageView fx:id="addHaveButton" fitHeight="25" fitWidth="25">
                         <Image url="@Images/doc.png">
                         </Image>
                     </ImageView>
@@ -114,9 +114,9 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" spacing="5">
+                <VBox alignment="CENTER" spacing="5" onMouseClicked="#onAddPrescibeClicked">
 
-                    <ImageView fx:id="addPrescribeButton" onMouseClicked="#onAddPrescibeClicked" fitWidth="25"
+                    <ImageView fx:id="addPrescribeButton" fitWidth="25"
                                fitHeight="25">
                         <Image url="@Images/prescribe.png">
                         </Image>
@@ -128,12 +128,12 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" spacing="5">
-                            <ImageView fx:id="addSeeButton" onMouseClicked="#onAddSeeClicked" fitWidth="25"
-                                       fitHeight="25">
-                                <Image url="@Images/see.png">
-                                </Image>
-                            </ImageView>
+                <VBox alignment="CENTER" spacing="5" onMouseClicked="#onAddSeeClicked">
+                    <ImageView fx:id="addSeeButton" fitWidth="25"
+                               fitHeight="25">
+                        <Image url="@Images/see.png">
+                        </Image>
+                    </ImageView>
                     <Label text="See">
                         <font>
                             <Font size="12.0"/>
@@ -142,12 +142,12 @@
                     </Label>
                 </VBox>
 
-                <VBox alignment="CENTER" spacing="5">
-                            <ImageView fx:id="editButton" onMouseClicked="#onEditClicked" fitWidth="25"
-                                       fitHeight="25">
-                                <Image url="@Images/edit.png">
-                                </Image>
-                            </ImageView>
+                <VBox alignment="CENTER" spacing="5" onMouseClicked="#onEditClicked">
+                    <ImageView fx:id="editButton" fitWidth="25"
+                               fitHeight="25">
+                        <Image url="@Images/edit.png">
+                        </Image>
+                    </ImageView>
                     <Label text="Edit">
                         <font>
                             <Font size="12.0"/>
@@ -155,8 +155,9 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" spacing="5">
-                    <Label fx:id="deleteButton" onMouseClicked="#onDeleteClicked" text="-" prefHeight="25" prefWidth="25" alignment="CENTER">
+                <VBox alignment="CENTER" spacing="5" onMouseClicked="#onDeleteClicked">
+                    <Label fx:id="deleteButton" text="-" prefHeight="25"
+                           prefWidth="25" alignment="CENTER">
                         <font>
                             <Font size="18.0"/>
                         </font>
@@ -168,8 +169,8 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" spacing="5">
-                    <Label onMouseClicked="#onAddClicked" text="+" prefHeight="25" prefWidth="25" alignment="CENTER">
+                <VBox alignment="CENTER" spacing="5" onMouseClicked="#onAddClicked">
+                    <Label text="+" prefHeight="25" prefWidth="25" alignment="CENTER">
                         <font>
                             <Font size="18.0"/>
                         </font>
