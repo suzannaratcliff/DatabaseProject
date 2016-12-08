@@ -56,7 +56,6 @@ public class UpdatePatientDialogController {
     }
 
     public void onUpdateClicked() {
-
         ArrayList<String> attributes = new ArrayList<>();
         ArrayList<String> values = new ArrayList<>();
 

@@ -8,6 +8,7 @@ import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
 import DrugzLLC.UpdateDialogs.UpdateDoctorDialogController;
 import DrugzLLC.UpdateDialogs.UpdatePatientDialogController;
+import DrugzLLC.UpdateDialogs.UpdatePrescriptionDialogController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -244,6 +245,8 @@ public class Controller implements Initializable {
                 onPatientsClicked();
                 break;
             case Prescriptions:
+                updateSelectedPrescriptions();
+                onPrescriptionsClicked();
                 break;
             case have:
                 break;
@@ -331,6 +334,30 @@ public class Controller implements Initializable {
                 dialogStage.setScene(scene);
                 UpdateDoctorDialogController updateDoctorDialogController = loader.getController();
                 updateDoctorDialogController.setDialogStage(dialogStage, doctor);
+
+                dialogStage.showAndWait();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateSelectedPrescriptions() {
+        Prescription prescription = prescriptionTableView.getSelectionModel().getSelectedItem();
+        if (prescription != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("UpdateDialogs/update_prescription_dialog.fxml"));
+                AnchorPane anchorPane = loader.load();
+
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                Scene scene = new Scene(anchorPane);
+
+                dialogStage.setScene(scene);
+                UpdatePrescriptionDialogController updatePrescriptionDialogController = loader.getController();
+                updatePrescriptionDialogController.setDialogStage(dialogStage, prescription);
 
                 dialogStage.showAndWait();
 
@@ -484,7 +511,7 @@ public class Controller implements Initializable {
     }
 
     private void initPatientTableView() {
-        TableColumn<Patient, String> ssnColumn = new TableColumn<>("Social Security Numer");
+        TableColumn<Patient, String> ssnColumn = new TableColumn<>("Social Security Number");
         ssnColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.SSN));
 
         TableColumn<Patient, String> firstNameColumn = new TableColumn<>("First Name");
