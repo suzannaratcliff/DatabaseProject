@@ -5,6 +5,7 @@ import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class JDBCTools {
 
@@ -151,7 +152,7 @@ public class JDBCTools {
     //////////////////////////////////////////////////////////////////////
     //                         update statements                        //
     //////////////////////////////////////////////////////////////////////
-    public static boolean updateFrom(Connection connection, String tableName, String[] attributes, String[] values, String condition) {
+    public static boolean updateFrom(Connection connection, String tableName, ArrayList<String> attributes, ArrayList<String> values, String condition) {
         String setUpdate = createSetUpdateString(attributes, values);
         String statementString = "UPDATE " + tableName + " SET " + setUpdate + " WHERE " + condition;
 
@@ -166,19 +167,19 @@ public class JDBCTools {
         return false;
     }
 
-    private static String createSetUpdateString(String[] attributes, String[] values) {
-        if (attributes.length != values.length) {
+    private static String createSetUpdateString(ArrayList<String> attributes, ArrayList<String> values) {
+        if (attributes.size() != values.size()) {
             throw new IllegalArgumentException("Attributes and values must be parallel arrays.");
         }
         StringBuilder setUpdateSB = new StringBuilder();
-        for (int i = 0; i < attributes.length; i++) {
-            setUpdateSB.append(attributes[i]);
+        for (int i = 0; i < attributes.size(); i++) {
+            setUpdateSB.append(attributes.get(i));
             setUpdateSB.append(" = ");
             setUpdateSB.append("'");
-            setUpdateSB.append(values[i]);
+            setUpdateSB.append(values.get(i));
             setUpdateSB.append("'");
             // last attribute does not need comma
-            if (i != attributes.length - 1) {
+            if (i != attributes.size() - 1) {
                 setUpdateSB.append(",");
             }
         }
@@ -226,7 +227,7 @@ public class JDBCTools {
     }
 
     public static ResultSet getResultSetInDB(Connection connect, String table, String keyForItem, String item) {
-        String queryStr = "SELECT * FROM "+ table + " WHERE "+ keyForItem +" = ?";
+        String queryStr = "SELECT * FROM "+ table + " WHERE "+ keyForItem + " = ?";
         ResultSet resultSet = null;
 
         PreparedStatement query;
@@ -242,7 +243,7 @@ public class JDBCTools {
     }
 
     public static ResultSet getResultSetNaturalJoinInDB(Connection connect, String mainTable, String relationshipTable, String keyForItem, String item) {
-        String queryStr = "SELECT * FROM "+ mainTable + " JOIN " + relationshipTable + " WHERE " + relationshipTable + "." + keyForItem + " = ?";
+        String queryStr = "SELECT * FROM " + mainTable + " JOIN " + relationshipTable + " WHERE " + relationshipTable + "." + keyForItem + " = ?";
         ResultSet resultSet = null;
 
         PreparedStatement query;

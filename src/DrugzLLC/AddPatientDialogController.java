@@ -1,9 +1,7 @@
 package DrugzLLC;
 
 import DrugzLLC.Tables.Patient;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class AddPatientDialogController {
@@ -12,15 +10,19 @@ public class AddPatientDialogController {
     public TextField firstNameTextField;
     public TextField middleNameTextField;
     public TextField lastNameTextField;
-    public TextField dateOfBirthTextField;
     public TextField insuranceNameTextField;
     public TextField addressTextField;
     public DatePicker dobDatePicker;
+
+    public Label dialogTitle;
+    public Button positiveButton;
 
     private Stage dialogStage;
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+        dialogTitle.setText("Add Patient");
+        positiveButton.setText("ADD");
     }
 
     public void onCancelClicked() {

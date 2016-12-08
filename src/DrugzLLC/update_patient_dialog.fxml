@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="375" prefWidth="450" xmlns="http://javafx.com/javafx/8.0.101"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="DrugzLLC.AddPatientDialogController">
+            fx:controller="DrugzLLC.UpdatePatientDialogController">
     <children>
         <HBox alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10">
             <Label alignment="CENTER" fx:id="dialogTitle">
@@ -25,7 +25,7 @@
                 <Label text="Insurance Company" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
                 <Label text="Address" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
 
-                <TextField fx:id="ssnTextField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label fx:id="ssnTextField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <TextField fx:id="firstNameTextField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <TextField fx:id="middleNameTextField" prefWidth="200.0" GridPane.columnIndex="1"
                            GridPane.rowIndex="2"/>
@@ -58,7 +58,7 @@
             </padding>
             <Button onAction="#onCancelClicked" text="CANCEL">
             </Button>
-            <Button onAction="#onAddClicked" fx:id="positiveButton">
+            <Button onAction="#onUpdateClicked" fx:id="positiveButton">
             </Button>
         </HBox>
     </children>

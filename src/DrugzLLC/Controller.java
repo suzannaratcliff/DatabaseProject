@@ -134,12 +134,9 @@ public class Controller implements Initializable {
 
     public void onSeeClicked() {
         Patient patient = patientTableView.getSelectionModel().getSelectedItem();
-// todo show label of who was searched for
         if (patient != null) {
             onDoctorsClicked();
             userFeedBackLabel.setText("Showing which doctor(s) patient : " + patient.getLastName() + " sees.");
-
-            // check for num??
             doctorTableView.setItems(getDoctorObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Doctors.name(),
@@ -147,18 +144,17 @@ public class Controller implements Initializable {
                     Patient.SSN_JDBC_KEY,
                     patient.getSsn()
             )));
+            if (doctorTableView.getItems().isEmpty()) {
+                showErrorAlertDialog(patient.getLastName() + " does not see any doctors.");
+            }
         }
-
-
     }
 
     public void onHaveClicked() {
         Patient patient = patientTableView.getSelectionModel().getSelectedItem();
-// todo show label of who was searched for
         if (patient != null) {
             onPrescriptionsClicked();
             userFeedBackLabel.setText("Showing which prescription(s) patient : " + patient.getLastName() + " has.");
-            // check for num????
             prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Prescriptions.name(),
@@ -166,6 +162,9 @@ public class Controller implements Initializable {
                     Patient.SSN_JDBC_KEY,
                     patient.getSsn()
             )));
+            if (prescriptionTableView.getItems().isEmpty()) {
+                showErrorAlertDialog(patient.getLastName() + " does not have any prescriptions.");
+            }
         }
 
     }
@@ -182,6 +181,9 @@ public class Controller implements Initializable {
                     Doctor.ID_JDBC_KEY,
                     doctor.getId()
             )));
+            if (prescriptionTableView.getItems().isEmpty()) {
+                showErrorAlertDialog(doctor.getName() + " does not prescribe any prescriptions.");
+            }
         }
     }
 
@@ -233,6 +235,8 @@ public class Controller implements Initializable {
             case Doctors:
                 break;
             case Patients:
+                updateSelectedPatients();
+                onPatientsClicked();
                 break;
             case Prescriptions:
                 break;
@@ -281,6 +285,29 @@ public class Controller implements Initializable {
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateSelectedPatients() {
+        Patient patient = patientTableView.getSelectionModel().getSelectedItem();
+        if (patient != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("update_patient_dialog.fxml"));
+                AnchorPane anchorPane = loader.load();
+
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                Scene scene = new Scene(anchorPane);
+
+                dialogStage.setScene(scene);
+                UpdatePatientDialogController updatePatientDialogController = loader.getController();
+                updatePatientDialogController.setDialogStage(dialogStage, patient);
+
+                dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -508,7 +535,7 @@ public class Controller implements Initializable {
 //        });
     }
 
-    private enum Table {
+    public enum Table {
         Patients, Prescriptions, Doctors, see, prescribe, have;
     }
 }
