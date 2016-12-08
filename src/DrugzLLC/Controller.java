@@ -6,6 +6,7 @@ import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
+import DrugzLLC.UpdateDialogs.UpdateDoctorDialogController;
 import DrugzLLC.UpdateDialogs.UpdatePatientDialogController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -235,6 +236,8 @@ public class Controller implements Initializable {
     public void onEditClicked() {
         switch (currentTable) {
             case Doctors:
+                updateSelectedDoctors();
+                onDoctorsClicked();
                 break;
             case Patients:
                 updateSelectedPatients();
@@ -307,6 +310,30 @@ public class Controller implements Initializable {
                 updatePatientDialogController.setDialogStage(dialogStage, patient);
 
                 dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateSelectedDoctors() {
+        Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
+        if (doctor != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("UpdateDialogs/update_doctor_dialog.fxml"));
+                AnchorPane anchorPane = loader.load();
+
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                Scene scene = new Scene(anchorPane);
+
+                dialogStage.setScene(scene);
+                UpdateDoctorDialogController updateDoctorDialogController = loader.getController();
+                updateDoctorDialogController.setDialogStage(dialogStage, doctor);
+
+                dialogStage.showAndWait();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
