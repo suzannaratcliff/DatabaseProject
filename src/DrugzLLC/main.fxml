@@ -89,9 +89,12 @@
 
     <bottom>
         <StackPane>
+            <padding>
+                <Insets top="10"/>
+            </padding>
             <Label fx:id="userFeedBackLabel" prefWidth="Infinity" alignment="BASELINE_LEFT">
                 <padding>
-                    <Insets bottom="10" left="10" right="10"/>
+                    <Insets bottom="10" left="10" right="10" top="10"/>
                 </padding>
                 <font>
                     <Font size="18.0"/>
