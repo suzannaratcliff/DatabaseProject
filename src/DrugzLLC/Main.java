@@ -32,7 +32,7 @@ public class Main extends Application {
 
     private void setUpWindow(Stage primaryStage) {
         primaryStage.setTitle("Drugz LLC");
-        primaryStage.getIcons().add(new Image("file:DrugzIcon.png"));
+        primaryStage.getIcons().add(new Image("file:src/DrugzLLC/Images/DrugzIcon.png"));
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
             closeProgram(primaryStage);

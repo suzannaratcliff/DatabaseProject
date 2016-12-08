@@ -6,40 +6,41 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
+<BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrugzLLC.Controller">
     <top>
         <VBox spacing="10">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <TextField fx:id="searchBarTextField" onAction="#onSearchComplete" prefWidth="Infinity" />
+            <TextField fx:id="searchBarTextField" onAction="#onSearchComplete" prefWidth="Infinity"/>
         </VBox>
     </top>
 
     <left>
         <VBox spacing="10">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
 
             <HBox>
                 <Button minWidth="150" onAction="#onPatientsClicked" text="PATIENTS">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
             <HBox>
                 <Button minWidth="150" onAction="#onDoctorsClicked" text="DOCTORS">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
             <HBox>
                 <Button minWidth="150" onAction="#onPrescriptionsClicked" text="PRESCRIPTIONS">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
@@ -47,7 +48,7 @@
             <HBox>
                 <Button fx:id="seeButton" minWidth="150" onAction="#onSeeClicked" text="SEE" visible="false">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
@@ -55,15 +56,16 @@
             <HBox>
                 <Button fx:id="haveButton" minWidth="150" onAction="#onHaveClicked" text="HAVE" visible="false">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
 
             <HBox>
-                <Button fx:id="prescribeButton" minWidth="150" onAction="#onPrescribeClicked" text="PRESCRIBE" visible="false">
+                <Button fx:id="prescribeButton" minWidth="150" onAction="#onPrescribeClicked" text="PRESCRIBE"
+                        visible="false">
                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="14.0"/>
                     </font>
                 </Button>
             </HBox>
@@ -74,7 +76,7 @@
     <center>
         <StackPane>
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
             <TableView fx:id="doctorTableView" visible="false">
             </TableView>
@@ -89,37 +91,38 @@
         <StackPane>
             <Label fx:id="userFeedBackLabel" prefWidth="Infinity" alignment="BASELINE_LEFT">
                 <padding>
-                    <Insets bottom="10" left="10" right="10" />
+                    <Insets bottom="10" left="10" right="10"/>
                 </padding>
                 <font>
-                    <Font size="18.0" />
-                </font></Label>
-        <HBox alignment="BOTTOM_RIGHT" spacing="10">
-            <padding>
-                <Insets bottom="10" left="10" right="10" />
-            </padding>
-            <Button fx:id="editButton" onAction="#onEditClicked">
-                <graphic>
-                    <ImageView>
-                        <Image url="@edit.png" requestedHeight="25" requestedWidth="25">
-
-                        </Image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
-            <Button fx:id="deleteButton" onAction="#onDeleteClicked" text="-">
-                <font>
-                    <Font size="18.0" />
+                    <Font size="18.0"/>
                 </font>
-            </Button>
-            <Button onAction="#onAddClicked" text="+">
-                <font>
-                    <Font size="18.0" />
-                </font>
-            </Button>
+            </Label>
+            <HBox alignment="BOTTOM_RIGHT" spacing="10">
+                <padding>
+                    <Insets bottom="10" left="10" right="10"/>
+                </padding>
+                <Button fx:id="editButton" onAction="#onEditClicked">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@Images/edit.png" requestedHeight="25" requestedWidth="25">
 
-        </HBox>
+                            </Image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="deleteButton" onAction="#onDeleteClicked" text="-">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Button>
+                <Button onAction="#onAddClicked" text="+">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Button>
+
+            </HBox>
         </StackPane>
     </bottom>
 </BorderPane>
