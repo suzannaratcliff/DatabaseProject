@@ -228,6 +228,23 @@ public class Controller implements Initializable {
         }
     }
 
+    public void onEditClicked() {
+        switch (currentTable) {
+            case Doctors:
+                break;
+            case Patients:
+                break;
+            case Prescriptions:
+                break;
+            case have:
+                break;
+            case prescribe:
+                break;
+            case see:
+                break;
+        }
+    }
+
     private void showAddDoctorDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
