@@ -6,6 +6,7 @@ import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
+import DrugzLLC.UpdateDialogs.UpdatePatientDialogController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,7 @@ public class Controller implements Initializable {
     public Label userFeedBackLabel;
 
     public void onSearchComplete() {
-        userFeedBackLabel.setText("Search results for: " +  searchBarTextField.getText());
+        userFeedBackLabel.setText("Search results for: " + searchBarTextField.getText());
         switch (currentTable) {
             case Doctors:
                 if (JDBCTools.isItemInTable(Main.getConnection(), Table.Doctors.name(), Doctor.NAME_JDBC_KEY, searchBarTextField.getText())) {
@@ -172,7 +173,7 @@ public class Controller implements Initializable {
 
     public void onPrescribeClicked() {
         Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
-        if(doctor != null) {
+        if (doctor != null) {
             onPrescriptionsClicked();
             userFeedBackLabel.setText("Showing which prescription(s) doctor : " + doctor.getName() + " prescribes.");
             prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
@@ -294,7 +295,7 @@ public class Controller implements Initializable {
         if (patient != null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("update_patient_dialog.fxml"));
+                loader.setLocation(getClass().getResource("UpdateDialogs/update_patient_dialog.fxml"));
                 AnchorPane anchorPane = loader.load();
 
                 Stage dialogStage = new Stage();

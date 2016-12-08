@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="375" prefWidth="450" xmlns="http://javafx.com/javafx/8.0.101"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="DrugzLLC.UpdatePatientDialogController">
+            fx:controller="DrugzLLC.UpdateDialogs.UpdatePatientDialogController">
     <children>
         <HBox alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10">
             <Label alignment="CENTER" fx:id="dialogTitle">

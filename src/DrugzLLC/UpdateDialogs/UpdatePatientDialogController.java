@@ -1,5 +1,8 @@
-package DrugzLLC;
+package DrugzLLC.UpdateDialogs;
 
+import DrugzLLC.Controller;
+import DrugzLLC.JDBCTools;
+import DrugzLLC.Main;
 import DrugzLLC.Tables.Patient;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
