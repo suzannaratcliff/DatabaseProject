@@ -295,7 +295,7 @@ public class JDBCTools {
     }
 
     public static ResultSet getResultSetNaturalJoinInDB(Connection connect, String mainTable, String relationshipTable, String keyForItem, String item) {
-        String queryStr = "SELECT * FROM " + mainTable + " JOIN " + relationshipTable + " WHERE " + relationshipTable + "." + keyForItem + " = ?";
+        String queryStr = "SELECT * FROM " + mainTable + " NATURAL JOIN " + relationshipTable + " WHERE " + relationshipTable + "." + keyForItem + " = ?";
         ResultSet resultSet = null;
 
         PreparedStatement query;
