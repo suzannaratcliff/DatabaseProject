@@ -388,7 +388,7 @@ public class Controller implements Initializable {
     }
 
     private void deleteSelectedPatients() {
-        if(patientTableView.getSelectionModel().getSelectedItem() != null) {
+        if (patientTableView.getSelectionModel().getSelectedItem() != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Patient");
             alert.setHeaderText("Are you sure you would like to delete " +
