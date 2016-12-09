@@ -6,6 +6,7 @@ import DrugzLLC.TableTools;
 import DrugzLLC.Tables.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
@@ -21,6 +22,7 @@ public class PrescribeDialogController {
             dialogTitle.setText("Link what prescription patient : " + doctor.getName() + " prescribes.");
             this.doctor = doctor;
             TableTools.initPrescriptionTableView(prescriptionTableView);
+            prescriptionTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         }
 
         public void onCancelClicked() {

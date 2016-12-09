@@ -7,6 +7,7 @@ import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.See;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
@@ -24,6 +25,7 @@ public class SeeDialogController {
         dialogTitle.setText("Link who patient : " + patient.getLastName() + " sees.");
         this.patient = patient;
         initDoctorTableView(doctorTableView);
+        doctorTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     public void onCancelClicked() {

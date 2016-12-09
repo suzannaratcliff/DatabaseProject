@@ -1,0 +1,10 @@
+905071|Synthroid|35|2|blood pressure, cholesterol
+752628|Crestor|45|3|liver problems, 
+913932|Ventolin|70|1|suicide,depression 
+484027|Nexium|60|2|heart attacks, congestive heart failure
+807413|Advair|35|3|strokes,cardiomyopathy
+789840|Lyrica|40|2|dizziness, nausea, 
+110782|Spiriva|70|1|depression
+372029|Januvia|50|1|dizziness, nausea, depression
+241909|Enbrel|85|1|heart attacks, congestive heart failure, blood pressure, cholesterol
+309549|Remicade|90|1|blood pressure, cholesterol,blood pressure, cholesterol

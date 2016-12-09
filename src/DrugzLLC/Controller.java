@@ -89,6 +89,24 @@ public class Controller implements Initializable {
         }
     }
 
+    public void onAdvancedSearchComplete() {
+        // may need callback
+        switch (currentTable) {
+            case Doctors:
+                break;
+            case Patients:
+                break;
+            case Prescriptions:
+                break;
+            case have:
+                break;
+            case prescribe:
+                break;
+            case see:
+                break;
+        }
+    }
+
     public void onDoctorsClicked() {
         currentTable = Table.Doctors;
         searchBarTextField.setPromptText("Search doctors name");

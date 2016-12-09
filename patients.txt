@@ -1,0 +1,12 @@
+123-45-7899|Johnny|David|Smith|1984-1-23|UnitedHealthcare|4356 Smith Lane, Villas, WI 56789
+221-50-4891|Neoma|Rose|Oakley|1947-08-08|State Farm Health|36 Sycamore Ave. Reston, WI 20191
+468-22-3391|Inez|Sebastian|Bellamy|1950-10-05|Wisconsin HealthCare|886 South Hillside St. Westby 56663
+045-52-9838|Ji|Alicia|Thornton|1982-03-16|UnitedHealthcare|810 Fairfield St. Waukegan WI 60085
+576-07-8751|Garth|Bo|Nicholson|1988-07-29|State Farm Health|31 West 4th Street Galesburg MN 08360
+226-11-6700|Cinda|Keeler|Blanchard|1927-10-30|Molina Health Care|974 Buttonwood Av. Vineland WI 54448
+585-72-1866|Gearldine|Hunter|Knott|1933-02-22|Wisconsin HealthCare|795 Annadale St. Madison 54677
+395-50-2658|Dianne|Elena|Farrell|1971-08-18|Medica|9345 Clay St. La Crosse WI| 60035
+233-13-5837|Irma|Buhle|Brandrick|1967-05-26|UnitedHealthcare|116 Mechanic St. La Crosse WI| 54611
+235-27-8108|Lessie|Elvina|Barr|1975-09-20|HealthPartners|7757 Military Circle Summerville, WI 29483
+648-42-5139|Gabriel|Charles|Read|1948-07-04|Humana|9557 South Deerfield St. La Crosse WI| 80811
+516-41-0426|Ching|Justin|Dickson|1966-07-04|State Farm Health|17 Fairway Rd. YLa Crosse WI| 48197
