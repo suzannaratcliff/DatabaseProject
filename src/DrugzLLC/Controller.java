@@ -4,6 +4,7 @@ import DrugzLLC.AddDialogs.AddDoctorDialogController;
 import DrugzLLC.AddDialogs.AddPatientDialogController;
 import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
 import DrugzLLC.RelationshipConnections.HaveDialogController;
+import DrugzLLC.RelationshipConnections.PrescribeDialogController;
 import DrugzLLC.RelationshipConnections.SeeDialogController;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
@@ -484,7 +485,25 @@ public class Controller implements Initializable {
     }
 
     public void onAddPrescribeClicked() {
+        Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
+        if (doctor != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("RelationshipConnections/prescribe_dialog.fxml"));
+                AnchorPane anchorPane = loader.load();
 
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                Scene scene = new Scene(anchorPane);
+
+                dialogStage.setScene(scene);
+                PrescribeDialogController prescribeDialogController = loader.getController();
+                prescribeDialogController.setDialogStage(dialogStage, doctor);
+                dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void onAddHaveClicked() {
