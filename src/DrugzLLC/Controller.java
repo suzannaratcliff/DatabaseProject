@@ -596,6 +596,22 @@ public class Controller implements Initializable {
     }
 
     public void onAddSeeClicked() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("see_dialog.fxml"));
+            AnchorPane anchorPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(anchorPane);
+
+            dialogStage.setScene(scene);
+            SeeDialogController seeDialogController = loader.getController();
+            seeDialogController.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

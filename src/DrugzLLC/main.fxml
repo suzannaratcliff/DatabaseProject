@@ -114,8 +114,8 @@
                     <Insets bottom="10" left="10" right="10" />
                 </padding>
 
-                <VBox alignment="CENTER" onMouseClicked="#onAddHaveClicked" spacing="5">
-                    <ImageView fx:id="addHaveButton" fitHeight="25" fitWidth="25">
+                <VBox fx:id="addHaveButton" alignment="CENTER" onMouseClicked="#onAddHaveClicked" spacing="5">
+                    <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/doc.png">
                         </Image>
                     </ImageView>
@@ -126,9 +126,9 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" onMouseClicked="#onAddPrescribeClicked" spacing="5">
+                <VBox fx:id="addPrescribeButton" alignment="CENTER" onMouseClicked="#onAddPrescribeClicked" spacing="5">
 
-                    <ImageView fx:id="addPrescribeButton" fitHeight="25" fitWidth="25">
+                    <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/prescribe.png">
                         </Image>
                     </ImageView>
@@ -139,8 +139,8 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" onMouseClicked="#onAddSeeClicked" spacing="5">
-                    <ImageView fx:id="addSeeButton" fitHeight="25" fitWidth="25">
+                <VBox  fx:id="addSeeButton" alignment="CENTER" onMouseClicked="#onAddSeeClicked" spacing="5">
+                    <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/see.png">
                         </Image>
                     </ImageView>
@@ -152,8 +152,8 @@
                     </Label>
                 </VBox>
 
-                <VBox alignment="CENTER" onMouseClicked="#onEditClicked" spacing="5">
-                    <ImageView fx:id="editButton" fitHeight="25" fitWidth="25">
+                <VBox fx:id="editButton" alignment="CENTER" onMouseClicked="#onEditClicked" spacing="5">
+                    <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/edit.png">
                         </Image>
                     </ImageView>
