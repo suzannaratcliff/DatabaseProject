@@ -1,5 +1,8 @@
-package DrugzLLC;
+package DrugzLLC.RelationshipConnections;
 
+import DrugzLLC.Controller;
+import DrugzLLC.JDBCTools;
+import DrugzLLC.Main;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.See;
@@ -25,7 +28,7 @@ public class SeeDialogController {
 
     public void setDialogStage(Stage dialogStage, Patient patient) {
         this.dialogStage = dialogStage;
-        dialogTitle.setText("Link who patient : " + "" + " sees.");
+        dialogTitle.setText("Link who patient : " + patient.getLastName() + " sees.");
         this.patient = patient;
         initDoctorTableView();
     }
@@ -40,8 +43,6 @@ public class SeeDialogController {
         if (doctorTableView.getSelectionModel().getSelectedItems() != null) {
             ObservableList<Doctor> doctorsObservableList;
                 doctorsObservableList = doctorTableView.getSelectionModel().getSelectedItems();
-//                Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
-
                 for (Doctor doctor : doctorsObservableList) {
                     // make connection between patient and doctors
                     See see = new See(doctor.getId(), patient.getSsn());

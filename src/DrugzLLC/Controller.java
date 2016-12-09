@@ -3,6 +3,7 @@ package DrugzLLC;
 import DrugzLLC.AddDialogs.AddDoctorDialogController;
 import DrugzLLC.AddDialogs.AddPatientDialogController;
 import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
+import DrugzLLC.RelationshipConnections.SeeDialogController;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
 import DrugzLLC.Tables.Prescription;
@@ -600,7 +601,7 @@ public class Controller implements Initializable {
         if (patient != null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("see_dialog.fxml"));
+                loader.setLocation(getClass().getResource("RelationshipConnections/see_dialog.fxml"));
                 AnchorPane anchorPane = loader.load();
 
                 Stage dialogStage = new Stage();
