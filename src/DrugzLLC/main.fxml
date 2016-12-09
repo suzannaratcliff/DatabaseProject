@@ -19,27 +19,19 @@
     <top>
         <AnchorPane>
             <children>
-                <!--<HBox spacing="10" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"-->
-                <!--AnchorPane.topAnchor="10">-->
-                <!--<padding>-->
-                <!--<Insets bottom="10" left="10" right="10" top="10" />-->
-                <!--</padding>-->
                 <TextField fx:id="searchBarTextField" onAction="#onSearchComplete" AnchorPane.leftAnchor="10.0"
                            AnchorPane.rightAnchor="70.0"
                            AnchorPane.topAnchor="10"/>
-                <ImageView fitHeight="25" fitWidth="25"
-                           AnchorPane.rightAnchor="40.0"
-                           AnchorPane.topAnchor="10">
-                    <Image url="@Images/search.png">
-                    </Image>
-                </ImageView>
-                <ImageView fitHeight="25" fitWidth="25"
-                           AnchorPane.rightAnchor="10.0"
-                           AnchorPane.topAnchor="10">
-                    <Image url="@Images/searchplus.png">
-                    </Image>
-                </ImageView>
-                <!--</HBox>-->
+                <HBox AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="10" onMouseClicked="#onSearchComplete">
+                    <ImageView fitHeight="25" fitWidth="25">
+                        <Image url="@Images/search.png"/>
+                    </ImageView>
+                </HBox>
+                <HBox AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10">
+                    <ImageView fitHeight="25" fitWidth="25">
+                        <Image url="@Images/searchplus.png"/>
+                    </ImageView>
+                </HBox>
             </children>
         </AnchorPane>
     </top>
