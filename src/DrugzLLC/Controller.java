@@ -599,11 +599,27 @@ public class Controller implements Initializable {
 
     }
 
-    public void onAddPrescibeClicked() {
+    public void onAddPrescribeClicked() {
 
     }
 
     public void onAddHaveClicked() {
+        switch (currentTable) {
+            case Doctors:
+                break;
+            case Patients:
+                // Patients have prescriptions
+
+                break;
+            case Prescriptions:
+                break;
+            case have:
+                break;
+            case prescribe:
+                break;
+            case see:
+                break;
+        }
 
     }
 
