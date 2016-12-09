@@ -101,12 +101,12 @@
             <padding>
                 <Insets top="10" />
             </padding>
-            <Label fx:id="userFeedBackLabel" alignment="BASELINE_LEFT" prefWidth="Infinity">
+            <Label fx:id="userFeedBackLabel" alignment="CENTER_LEFT" prefWidth="Infinity">
                 <padding>
                     <Insets bottom="10" left="10" right="10" top="10" />
                 </padding>
                 <font>
-                    <Font size="18.0" />
+                    <Font size="16.0" />
                 </font>
             </Label>
             <HBox alignment="BOTTOM_RIGHT" spacing="15">
