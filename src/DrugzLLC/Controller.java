@@ -3,6 +3,7 @@ package DrugzLLC;
 import DrugzLLC.AddDialogs.AddDoctorDialogController;
 import DrugzLLC.AddDialogs.AddPatientDialogController;
 import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
+import DrugzLLC.RelationshipConnections.HaveDialogController;
 import DrugzLLC.RelationshipConnections.SeeDialogController;
 import DrugzLLC.Tables.Doctor;
 import DrugzLLC.Tables.Patient;
@@ -487,23 +488,25 @@ public class Controller implements Initializable {
     }
 
     public void onAddHaveClicked() {
-        switch (currentTable) {
-            case Doctors:
-                break;
-            case Patients:
-                // Patients have prescriptions
+        Patient patient = patientTableView.getSelectionModel().getSelectedItem();
+        if (patient != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("RelationshipConnections/have_dialog.fxml"));
+                AnchorPane anchorPane = loader.load();
 
-                break;
-            case Prescriptions:
-                break;
-            case have:
-                break;
-            case prescribe:
-                break;
-            case see:
-                break;
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                Scene scene = new Scene(anchorPane);
+
+                dialogStage.setScene(scene);
+                HaveDialogController haveDialogController = loader.getController();
+                haveDialogController.setDialogStage(dialogStage, patient);
+                dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     @Override
@@ -520,9 +523,5 @@ public class Controller implements Initializable {
 //                System.out.println(oldValue + " nv " + newValue);
 //            }
 //        });
-    }
-
-    public enum Table {
-        Patients, Prescriptions, Doctors, see, prescribe, have;
     }
 }

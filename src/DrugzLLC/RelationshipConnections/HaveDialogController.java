@@ -2,6 +2,7 @@ package DrugzLLC.RelationshipConnections;
 
 import DrugzLLC.JDBCTools;
 import DrugzLLC.Main;
+import DrugzLLC.TableTools;
 import DrugzLLC.Tables.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
@@ -19,7 +20,7 @@ public class HaveDialogController {
         this.dialogStage = dialogStage;
         dialogTitle.setText("Link what prescription patient : " + patient.getLastName() + " has.");
         this.patient = patient;
-       // initDoctorTableView();
+        TableTools.initPrescriptionTableView(prescriptionTableView);
     }
 
     public void onCancelClicked() {

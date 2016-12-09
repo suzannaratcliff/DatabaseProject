@@ -1,8 +1,8 @@
 package DrugzLLC.UpdateDialogs;
 
-import DrugzLLC.Controller;
 import DrugzLLC.JDBCTools;
 import DrugzLLC.Main;
+import DrugzLLC.TableTools;
 import DrugzLLC.Tables.Patient;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -84,7 +84,7 @@ public class UpdatePatientDialogController {
             values.add(dobDatePicker.getValue().toString());
         }
 
-        JDBCTools.updateFrom(Main.getConnection(), Controller.Table.Patients.name(), attributes, values, Patient.SSN_JDBC_KEY + " = '" + patientToUpdate.getSsn() + "'");
+        JDBCTools.updateFrom(Main.getConnection(), TableTools.Table.Patients.name(), attributes, values, Patient.SSN_JDBC_KEY + " = '" + patientToUpdate.getSsn() + "'");
         dialogStage.close();
     }
 }

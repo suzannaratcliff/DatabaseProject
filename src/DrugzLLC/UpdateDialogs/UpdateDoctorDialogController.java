@@ -1,8 +1,8 @@
 package DrugzLLC.UpdateDialogs;
 
-import DrugzLLC.Controller;
 import DrugzLLC.JDBCTools;
 import DrugzLLC.Main;
+import DrugzLLC.TableTools;
 import DrugzLLC.Tables.Doctor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,7 +52,7 @@ public class UpdateDoctorDialogController {
             attributes.add(Doctor.LOCATION_JDBC_KEY);
             values.add(locationTextField.getText());
         }
-        JDBCTools.updateFrom(Main.getConnection(), Controller.Table.Doctors.name(), attributes, values, Doctor.ID_JDBC_KEY + " = '" + doctorToUpdate.getId() + "'");
+        JDBCTools.updateFrom(Main.getConnection(), TableTools.Table.Doctors.name(), attributes, values, Doctor.ID_JDBC_KEY + " = '" + doctorToUpdate.getId() + "'");
         dialogStage.close();
     }
 }

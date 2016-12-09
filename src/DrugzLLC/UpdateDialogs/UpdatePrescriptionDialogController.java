@@ -1,8 +1,8 @@
 package DrugzLLC.UpdateDialogs;
 
-import DrugzLLC.Controller;
 import DrugzLLC.JDBCTools;
 import DrugzLLC.Main;
+import DrugzLLC.TableTools;
 import DrugzLLC.Tables.Prescription;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -63,7 +63,7 @@ public class UpdatePrescriptionDialogController {
                 values.add(sideEffectsTextField.getText());
             }
 
-            JDBCTools.updateFrom(Main.getConnection(), Controller.Table.Prescriptions.name(), attributes, values, Prescription.RX_JDBC_KEY + " = '" + prescriptionToUpdate.getRx() + "'");
+            JDBCTools.updateFrom(Main.getConnection(), TableTools.Table.Prescriptions.name(), attributes, values, Prescription.RX_JDBC_KEY + " = '" + prescriptionToUpdate.getRx() + "'");
             dialogStage.close();
         }
 }

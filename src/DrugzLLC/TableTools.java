@@ -83,7 +83,7 @@ public class TableTools {
         TableColumn<Doctor, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>(Doctor.NAME));
 
-        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Controller.Table.Doctors.name())));
+        doctorTableView.setItems(getDoctorObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Doctors.name())));
 
         doctorTableView.getColumns().add(idColumn);
         doctorTableView.getColumns().add(locationColumn);
@@ -112,7 +112,7 @@ public class TableTools {
         TableColumn<Patient, String> addressNameColumn = new TableColumn<>("Address");
         addressNameColumn.setCellValueFactory(new PropertyValueFactory<>(Patient.ADDRESS));
 
-        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Controller.Table.Patients.name())));
+        patientTableView.setItems(getPatientObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Patients.name())));
 
         patientTableView.getColumns().add(ssnColumn);
         patientTableView.getColumns().add(firstNameColumn);
@@ -139,12 +139,16 @@ public class TableTools {
         TableColumn<Prescription, String> sideEffectsColumn = new TableColumn<>("Side Effects");
         sideEffectsColumn.setCellValueFactory(new PropertyValueFactory<>(Prescription.SIDE_EFFECTS));
 
-        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Controller.Table.Prescriptions.name())));
+        prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.retrieveAllItems(Main.getConnection(), Table.Prescriptions.name())));
 
         prescriptionTableView.getColumns().add(rxColumn);
         prescriptionTableView.getColumns().add(nameColumn);
         prescriptionTableView.getColumns().add(numSuppliedColumn);
         prescriptionTableView.getColumns().add(numRefillsColumn);
         prescriptionTableView.getColumns().add(sideEffectsColumn);
+    }
+
+    public enum Table {
+        Patients, Prescriptions, Doctors, see, prescribe, have;
     }
 }
