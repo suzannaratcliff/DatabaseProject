@@ -34,8 +34,12 @@ public class PrescribeDialogController {
                 ObservableList<Prescription> prescriptionObservableList;
                 prescriptionObservableList = prescriptionTableView.getSelectionModel().getSelectedItems();
                 for (Prescription prescription : prescriptionObservableList) {
-                    Prescribe prescribe = new Prescribe(prescription.getRx(), Integer.parseInt(doctor.getId()));
-                    JDBCTools.insertIntoPrescripe(Main.getConnection(), prescribe);
+                    try {
+                        Prescribe prescribe = new Prescribe(prescription.getRx(), Integer.parseInt(doctor.getId()));
+                        JDBCTools.insertIntoPrescripe(Main.getConnection(), prescribe);
+                    } catch (NumberFormatException ex) {
+                        // bad data, why did we make prescribe int and not text????
+                    }
                 }
                 dialogStage.close();
             }

@@ -124,7 +124,7 @@
                     <Insets bottom="10" left="10" right="10"/>
                 </padding>
 
-                <VBox fx:id="addHaveButton" alignment="CENTER" onMouseClicked="#onAddHaveClicked" spacing="5">
+                <VBox fx:id="addHaveButton" alignment="CENTER" onMouseClicked="#onAddHaveClicked" spacing="5" visible="false">
                     <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/doc.png">
                         </Image>
@@ -136,7 +136,7 @@
 
                     </Label>
                 </VBox>
-                <VBox fx:id="addPrescribeButton" alignment="CENTER" onMouseClicked="#onAddPrescribeClicked" spacing="5">
+                <VBox fx:id="addPrescribeButton" alignment="CENTER" onMouseClicked="#onAddPrescribeClicked" spacing="5" visible="false">
 
                     <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/prescribe.png">
@@ -149,7 +149,7 @@
 
                     </Label>
                 </VBox>
-                <VBox fx:id="addSeeButton" alignment="CENTER" onMouseClicked="#onAddSeeClicked" spacing="5">
+                <VBox fx:id="addSeeButton" alignment="CENTER" onMouseClicked="#onAddSeeClicked" spacing="5" visible="false">
                     <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/see.png">
                         </Image>
@@ -162,7 +162,7 @@
                     </Label>
                 </VBox>
 
-                <VBox fx:id="editButton" alignment="CENTER" onMouseClicked="#onEditClicked" spacing="5">
+                <VBox fx:id="editButton" alignment="CENTER" onMouseClicked="#onEditClicked" spacing="5" visible="false">
                     <ImageView fitHeight="25" fitWidth="25">
                         <Image url="@Images/edit.png">
                         </Image>
@@ -174,8 +174,8 @@
 
                     </Label>
                 </VBox>
-                <VBox alignment="CENTER" onMouseClicked="#onDeleteClicked" spacing="5">
-                    <Label fx:id="deleteButton" alignment="CENTER" prefHeight="25" prefWidth="25" text="-">
+                <VBox fx:id="deleteButton" alignment="CENTER" onMouseClicked="#onDeleteClicked" spacing="5" visible="false">
+                    <Label alignment="CENTER" prefHeight="25" prefWidth="25" text="-">
                         <font>
                             <Font size="18.0"/>
                         </font>

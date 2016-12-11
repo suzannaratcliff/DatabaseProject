@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,7 +40,12 @@ public class Controller implements Initializable {
     public TableView<Patient> patientTableView;
     public TableView<Prescription> prescriptionTableView;
     public TextField searchBarTextField;
-    public Label deleteButton;
+
+    public VBox deleteButton;
+    public VBox editButton;
+    public VBox addSeeButton;
+    public VBox addPrescribeButton;
+    public VBox addHaveButton;
 
     public Button prescribeButton;
     public Button haveButton;
@@ -191,6 +197,12 @@ public class Controller implements Initializable {
         searchBarTextField.setPromptText("Search doctors name");
         userFeedBackLabel.setText("");
 
+        deleteButton.setVisible(false);
+        editButton.setVisible(false);
+        addSeeButton.setVisible(false);
+        addPrescribeButton.setVisible(false);
+        addHaveButton.setVisible(false);
+
         doctorTableView.setVisible(true);
         patientTableView.setVisible(false);
         prescriptionTableView.setVisible(false);
@@ -207,6 +219,12 @@ public class Controller implements Initializable {
         searchBarTextField.setPromptText("Search patients last name");
         userFeedBackLabel.setText("");
 
+        deleteButton.setVisible(false);
+        editButton.setVisible(false);
+        addSeeButton.setVisible(false);
+        addPrescribeButton.setVisible(false);
+        addHaveButton.setVisible(false);
+
         doctorTableView.setVisible(false);
         patientTableView.setVisible(true);
         prescriptionTableView.setVisible(false);
@@ -222,6 +240,12 @@ public class Controller implements Initializable {
         currentTable = Table.Prescriptions;
         searchBarTextField.setPromptText("Search prescription #");
         userFeedBackLabel.setText("");
+
+        deleteButton.setVisible(false);
+        editButton.setVisible(false);
+        addSeeButton.setVisible(false);
+        addPrescribeButton.setVisible(false);
+        addHaveButton.setVisible(false);
 
         prescribeButton.setVisible(false);
         haveButton.setVisible(false);
@@ -624,13 +648,30 @@ public class Controller implements Initializable {
         initPatientTableView(patientTableView);
         initPrescriptionTableView(prescriptionTableView);
 
+        patientTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            deleteButton.setVisible(true);
+            editButton.setVisible(true);
+            addSeeButton.setVisible(true);
+            addPrescribeButton.setVisible(false);
+            addHaveButton.setVisible(true);
+        });
+
+        doctorTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            deleteButton.setVisible(true);
+            editButton.setVisible(true);
+            addSeeButton.setVisible(false);
+            addPrescribeButton.setVisible(true);
+            addHaveButton.setVisible(false);
+        });
+
+        prescriptionTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            deleteButton.setVisible(true);
+            editButton.setVisible(true);
+            addSeeButton.setVisible(false);
+            addPrescribeButton.setVisible(false);
+            addHaveButton.setVisible(false);
+        });
+
         onPatientsClicked();
-//        patientTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Patient> observable, Patient oldValue, Patient newValue) {
-//                deleteButton.setVisible(true);
-//                System.out.println(oldValue + " nv " + newValue);
-//            }
-//        });
     }
 }
