@@ -205,7 +205,7 @@ public class JDBCTools {
     //                         update statements                        //
     //////////////////////////////////////////////////////////////////////
     public static boolean updateFrom(Connection connection, String tableName, ArrayList<String> attributes, ArrayList<String> values, String condition) {
-        String setUpdate = createValuesStringFromAttributes(attributes, values);
+        String setUpdate = createValuesStringFromAttributes(attributes, values, ",");
         String statementString = "UPDATE " + tableName + " SET " + setUpdate + " WHERE " + condition;
 
         PreparedStatement preparedStatement = null;
@@ -219,7 +219,7 @@ public class JDBCTools {
         return false;
     }
 
-    private static String createValuesStringFromAttributes(ArrayList<String> attributes, ArrayList<String> values) {
+    private static String createValuesStringFromAttributes(ArrayList<String> attributes, ArrayList<String> values, String separator) {
         if (attributes.size() != values.size()) {
             throw new IllegalArgumentException("Attributes and values must be parallel arrays.");
         }
@@ -232,7 +232,7 @@ public class JDBCTools {
             setUpdateSB.append("'");
             // last attribute does not need comma
             if (i != attributes.size() - 1) {
-                setUpdateSB.append(",");
+                setUpdateSB.append(separator);
             }
         }
         return setUpdateSB.toString();
@@ -242,7 +242,7 @@ public class JDBCTools {
         if (attributes.isEmpty()) {
             return null;
         }
-        String whereValues = createValuesStringFromAttributes(attributes, values);
+        String whereValues = createValuesStringFromAttributes(attributes, values, " AND ");
         String queryStr = "SELECT * FROM " + tableName + " WHERE " + whereValues;
 
 //        String countStr = "SELECT COUNT(*) FROM " + tableName + " WHERE " + whereValues;
