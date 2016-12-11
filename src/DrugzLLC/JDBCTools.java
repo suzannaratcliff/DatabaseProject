@@ -205,7 +205,7 @@ public class JDBCTools {
     //                         update statements                        //
     //////////////////////////////////////////////////////////////////////
     public static boolean updateFrom(Connection connection, String tableName, ArrayList<String> attributes, ArrayList<String> values, String condition) {
-        String setUpdate = createSetUpdateString(attributes, values);
+        String setUpdate = createValuesStringFromAttributes(attributes, values);
         String statementString = "UPDATE " + tableName + " SET " + setUpdate + " WHERE " + condition;
 
         PreparedStatement preparedStatement = null;
@@ -219,7 +219,7 @@ public class JDBCTools {
         return false;
     }
 
-    private static String createSetUpdateString(ArrayList<String> attributes, ArrayList<String> values) {
+    private static String createValuesStringFromAttributes(ArrayList<String> attributes, ArrayList<String> values) {
         if (attributes.size() != values.size()) {
             throw new IllegalArgumentException("Attributes and values must be parallel arrays.");
         }
@@ -236,6 +236,32 @@ public class JDBCTools {
             }
         }
         return setUpdateSB.toString();
+    }
+
+    public static ResultSet searchFromIfAvailable(Connection connection, String tableName, ArrayList<String> attributes, ArrayList<String> values) {
+        if (attributes.isEmpty()) {
+            return null;
+        }
+        String whereValues = createValuesStringFromAttributes(attributes, values);
+        String queryStr = "SELECT * FROM " + tableName + " WHERE " + whereValues;
+
+//        String countStr = "SELECT COUNT(*) FROM " + tableName + " WHERE " + whereValues;
+
+        ResultSet resultSet = null;
+        PreparedStatement query;
+        try {
+            query = connection.prepareStatement(queryStr);
+            resultSet = query.executeQuery();
+            if (resultSet.next()) {
+                query = connection.prepareStatement(queryStr);
+                resultSet = query.executeQuery();
+            } else {
+                resultSet = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 
     //////////////////////////////////////////////////////////////////////

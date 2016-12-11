@@ -3,6 +3,7 @@ package DrugzLLC;
 import DrugzLLC.AddDialogs.AddDoctorDialogController;
 import DrugzLLC.AddDialogs.AddPatientDialogController;
 import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
+import DrugzLLC.AdvancedSearchDialogs.PatientAdvancedSearchDialogController;
 import DrugzLLC.RelationshipConnections.HaveDialogController;
 import DrugzLLC.RelationshipConnections.PrescribeDialogController;
 import DrugzLLC.RelationshipConnections.SeeDialogController;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -90,11 +92,11 @@ public class Controller implements Initializable {
     }
 
     public void onAdvancedSearchComplete() {
-        // may need callback
         switch (currentTable) {
             case Doctors:
                 break;
             case Patients:
+                onPatientsAdvancedSearch();
                 break;
             case Prescriptions:
                 break;
@@ -105,6 +107,30 @@ public class Controller implements Initializable {
             case see:
                 break;
         }
+    }
+
+    private void onPatientsAdvancedSearch() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("AdvancedSearchDialogs/patient_advanced_search_dialog.fxml"));
+            AnchorPane anchorPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(anchorPane);
+
+            dialogStage.setScene(scene);
+            PatientAdvancedSearchDialogController patientAdvancedSearchDialogController = loader.getController();
+            patientAdvancedSearchDialogController.setDialogStage(dialogStage, this::setAdvancedSearchPatientTable);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setAdvancedSearchPatientTable(ResultSet resultSet) {
+        patientTableView.setItems(getPatientObservableList(resultSet));
+        userFeedBackLabel.setText("");
     }
 
     public void onDoctorsClicked() {
