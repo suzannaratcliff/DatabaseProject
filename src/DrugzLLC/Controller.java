@@ -29,6 +29,7 @@ import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static DrugzLLC.Main.showErrorAlertDialog;
 import static DrugzLLC.TableTools.*;
 
 public class Controller implements Initializable {
@@ -523,13 +524,6 @@ public class Controller implements Initializable {
                 prescriptionObservableList.forEach(allPrescriptions::remove);
             }
         }
-    }
-
-    private void showErrorAlertDialog(String header) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(header);
-        alert.showAndWait();
     }
 
     public void onAddSeeClicked() {

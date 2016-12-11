@@ -56,6 +56,13 @@ public class Main extends Application {
         return connection;
     }
 
+    public static void showErrorAlertDialog(String header) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.showAndWait();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

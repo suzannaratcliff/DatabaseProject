@@ -3,7 +3,6 @@ package DrugzLLC.AdvancedSearchDialogs;
 import DrugzLLC.Main;
 import DrugzLLC.TableTools;
 import DrugzLLC.Tables.Patient;
-import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -12,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import static DrugzLLC.JDBCTools.searchFromIfAvailable;
+import static DrugzLLC.Main.showErrorAlertDialog;
 
 public class PatientAdvancedSearchDialogController {
     public TextField ssnTextField;
@@ -79,10 +79,4 @@ public class PatientAdvancedSearchDialogController {
         void onPatientSearch(ResultSet resultSet);
     }
 
-    private void showErrorAlertDialog(String header) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(header);
-        alert.showAndWait();
-    }
 }
