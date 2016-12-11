@@ -35,16 +35,6 @@ public class PatientAdvancedSearchDialogController {
     }
 
     public void onSearchClicked() {
-
-        Patient patient = new Patient(
-                (!ssnTextField.getText().equals("")) ? ssnTextField.getText() : null,
-                (!firstNameTextField.getText().equals("")) ? firstNameTextField.getText() : null,
-                (!middleNameTextField.getText().equals("")) ? middleNameTextField.getText() : null,
-                (!lastNameTextField.getText().equals("")) ? lastNameTextField.getText() : null,
-                (dobDatePicker.getValue() != null) ? dobDatePicker.getValue().toString() : null,
-                (!insuranceNameTextField.getText().equals("")) ? insuranceNameTextField.getText() : null,
-                (!addressTextField.getText().equals("") ? addressTextField.getText() : null));
-
         ArrayList<String> attributes = new ArrayList<>();
         ArrayList<String> values = new ArrayList<>();
         if (!ssnTextField.getText().equals("")) {
@@ -77,16 +67,12 @@ public class PatientAdvancedSearchDialogController {
         }
 
         ResultSet resultSet = searchFromIfAvailable(Main.getConnection(), TableTools.Table.Patients.name(), attributes, values);
-       // try {
             if(resultSet != null) {
                 onAdvancedSearchComplete.onPatientSearch(resultSet);
                 dialogStage.close();
             } else {
                 showErrorAlertDialog("No results found.");
             }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public interface OnAdvancedSearchComplete {
@@ -99,5 +85,4 @@ public class PatientAdvancedSearchDialogController {
         alert.setHeaderText(header);
         alert.showAndWait();
     }
-
 }

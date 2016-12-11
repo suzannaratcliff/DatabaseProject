@@ -3,6 +3,7 @@ package DrugzLLC;
 import DrugzLLC.AddDialogs.AddDoctorDialogController;
 import DrugzLLC.AddDialogs.AddPatientDialogController;
 import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
+import DrugzLLC.AdvancedSearchDialogs.DoctorAdvancedSearchDialogController;
 import DrugzLLC.AdvancedSearchDialogs.PatientAdvancedSearchDialogController;
 import DrugzLLC.RelationshipConnections.HaveDialogController;
 import DrugzLLC.RelationshipConnections.PrescribeDialogController;
@@ -94,6 +95,7 @@ public class Controller implements Initializable {
     public void onAdvancedSearchComplete() {
         switch (currentTable) {
             case Doctors:
+                onDoctorsAdvancedSearch();
                 break;
             case Patients:
                 onPatientsAdvancedSearch();
@@ -126,6 +128,30 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void onDoctorsAdvancedSearch() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("AdvancedSearchDialogs/doctor_advanced_search_dialog.fxml"));
+            AnchorPane anchorPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(anchorPane);
+
+            dialogStage.setScene(scene);
+            DoctorAdvancedSearchDialogController doctorAdvancedSearchDialogController = loader.getController();
+            doctorAdvancedSearchDialogController.setDialogStage(dialogStage, this::setAdvancedSearchDoctorTable);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setAdvancedSearchDoctorTable(ResultSet resultSet) {
+        doctorTableView.setItems(getDoctorObservableList(resultSet));
+        userFeedBackLabel.setText("");
     }
 
     private void setAdvancedSearchPatientTable(ResultSet resultSet) {

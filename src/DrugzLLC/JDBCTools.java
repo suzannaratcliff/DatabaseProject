@@ -245,8 +245,6 @@ public class JDBCTools {
         String whereValues = createValuesStringFromAttributes(attributes, values, " AND ");
         String queryStr = "SELECT * FROM " + tableName + " WHERE " + whereValues;
 
-//        String countStr = "SELECT COUNT(*) FROM " + tableName + " WHERE " + whereValues;
-
         ResultSet resultSet = null;
         PreparedStatement query;
         try {
