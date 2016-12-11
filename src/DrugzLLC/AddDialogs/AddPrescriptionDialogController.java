@@ -33,25 +33,34 @@ public class AddPrescriptionDialogController {
     }
 
     public void onAddClicked() {
+        Prescription prescription = null;
+        try {
+            prescription = new Prescription(
+                    Integer.parseInt(rxTextField.getText()),
+                    nameTextField.getText(),
+                    Integer.parseInt(numberSuppliedTextField.getText()),
+                    Integer.parseInt(numberRefillsTextField.getText()),
+                    sideEffectsTextField.getText()
+            );
 
-        Prescription prescription = new Prescription(
-                Integer.parseInt(rxTextField.getText()),
-                nameTextField.getText(),
-                Integer.parseInt(numberSuppliedTextField.getText()),
-                Integer.parseInt(numberRefillsTextField.getText()),
-                sideEffectsTextField.getText()
-        );
-
-        boolean inserted = JDBCTools.insertIntoPrescription(Main.getConnection(), prescription);
-        if (inserted) {
-            dialogStage.close();
-        } else {
+            boolean inserted = JDBCTools.insertIntoPrescription(Main.getConnection(), prescription);
+            if (inserted) {
+                dialogStage.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("");
+                alert.setHeaderText("Error!");
+                alert.setContentText("Prescription: " + nameTextField.getText() + "with RX: " + rxTextField.getText() + " is already in the system.");
+                alert.showAndWait();
+            }
+        } catch (NumberFormatException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("");
             alert.setHeaderText("Error!");
-            alert.setContentText("Prescription: " + nameTextField.getText() + "with RX: " + rxTextField.getText() + " is already in the system.");
+            alert.setContentText("RX number, Number Supplied, and Number of Refills must be integers.");
             alert.showAndWait();
         }
+
     }
 
 }

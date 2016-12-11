@@ -34,14 +34,11 @@ public class PrescribeDialogController {
                 ObservableList<Prescription> prescriptionObservableList;
                 prescriptionObservableList = prescriptionTableView.getSelectionModel().getSelectedItems();
                 for (Prescription prescription : prescriptionObservableList) {
-                    // todo why int???????
                     Prescribe prescribe = new Prescribe(prescription.getRx(), Integer.parseInt(doctor.getId()));
                     JDBCTools.insertIntoPrescripe(Main.getConnection(), prescribe);
                 }
                 dialogStage.close();
             }
-            // else error??
-            // unlink here too???
         }
 
 
