@@ -5,6 +5,7 @@ import DrugzLLC.AddDialogs.AddPatientDialogController;
 import DrugzLLC.AddDialogs.AddPrescriptionDialogController;
 import DrugzLLC.AdvancedSearchDialogs.DoctorAdvancedSearchDialogController;
 import DrugzLLC.AdvancedSearchDialogs.PatientAdvancedSearchDialogController;
+import DrugzLLC.AdvancedSearchDialogs.PrescriptionAdvancedSearchDialogController;
 import DrugzLLC.RelationshipConnections.HaveDialogController;
 import DrugzLLC.RelationshipConnections.PrescribeDialogController;
 import DrugzLLC.RelationshipConnections.SeeDialogController;
@@ -102,6 +103,7 @@ public class Controller implements Initializable {
                 onPatientsAdvancedSearch();
                 break;
             case Prescriptions:
+                onPrescriptionsAdvancedSearch();
                 break;
             case have:
                 break;
@@ -109,6 +111,25 @@ public class Controller implements Initializable {
                 break;
             case see:
                 break;
+        }
+    }
+
+    private void onPrescriptionsAdvancedSearch() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("AdvancedSearchDialogs/prescription_advanced_search_dialog.fxml"));
+            AnchorPane anchorPane = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(anchorPane);
+
+            dialogStage.setScene(scene);
+            PrescriptionAdvancedSearchDialogController prescriptionAdvancedSearchDialogController = loader.getController();
+            prescriptionAdvancedSearchDialogController.setDialogStage(dialogStage, this::setAdvancedSearchPrescriptionTable);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -157,6 +178,11 @@ public class Controller implements Initializable {
 
     private void setAdvancedSearchPatientTable(ResultSet resultSet) {
         patientTableView.setItems(getPatientObservableList(resultSet));
+        userFeedBackLabel.setText("");
+    }
+
+    private void setAdvancedSearchPrescriptionTable(ResultSet resultSet) {
+        prescriptionTableView.setItems(getPrescriptionObservableList(resultSet));
         userFeedBackLabel.setText("");
     }
 
