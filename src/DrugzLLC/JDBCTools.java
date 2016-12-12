@@ -88,7 +88,7 @@ public class JDBCTools {
         return false;
     }
 
-    public static boolean insertIntoPrescripe(Connection connection, Prescribe prescribe) {
+    public static boolean insertIntoPrescribe(Connection connection, Prescribe prescribe) {
         String statementString = "INSERT INTO prescribe VALUES (?,?)";
 
         PreparedStatement preparedStatement = null;
@@ -101,7 +101,7 @@ public class JDBCTools {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         }
         return false;
     }

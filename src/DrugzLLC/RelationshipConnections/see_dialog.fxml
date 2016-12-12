@@ -25,7 +25,7 @@
             </padding>
             <Button onAction="#onCancelClicked" text="CANCEL">
             </Button>
-            <Button onAction="#onCreateLink" text="LINK">
+            <Button onAction="#onCreateLink" text="ADD DOCTOR">
             </Button>
         </HBox>
     </children>

@@ -19,7 +19,7 @@ public class HaveDialogController {
 
     public void setDialogStage(Stage dialogStage, Patient patient) {
         this.dialogStage = dialogStage;
-        dialogTitle.setText("Link what prescription patient : " + patient.getLastName() + " has.");
+        dialogTitle.setText("Add prescription that patient : " + patient.getLastName() + " will have.");
         this.patient = patient;
         TableTools.initPrescriptionTableView(prescriptionTableView);
         prescriptionTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

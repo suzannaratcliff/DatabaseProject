@@ -19,7 +19,7 @@ public class PrescribeDialogController {
 
         public void setDialogStage(Stage dialogStage, Doctor doctor) {
             this.dialogStage = dialogStage;
-            dialogTitle.setText("Link what prescription patient : " + doctor.getName() + " prescribes.");
+            dialogTitle.setText("Add what prescription doctor : " + doctor.getName() + " prescribes.");
             this.doctor = doctor;
             TableTools.initPrescriptionTableView(prescriptionTableView);
             prescriptionTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -36,7 +36,7 @@ public class PrescribeDialogController {
                 for (Prescription prescription : prescriptionObservableList) {
                     try {
                         Prescribe prescribe = new Prescribe(prescription.getRx(), Integer.parseInt(doctor.getId()));
-                        JDBCTools.insertIntoPrescripe(Main.getConnection(), prescribe);
+                        JDBCTools.insertIntoPrescribe(Main.getConnection(), prescribe);
                     } catch (NumberFormatException ex) {
                         // bad data, why did we make prescribe int and not text????
                     }

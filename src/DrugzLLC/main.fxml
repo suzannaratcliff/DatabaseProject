@@ -65,7 +65,7 @@
             </HBox>
 
             <HBox>
-                <Button fx:id="seeButton" minWidth="150" onAction="#onSeeClicked" text="SEE" visible="false">
+                <Button fx:id="seeButton" minWidth="150" onAction="#onSeeClicked" text="DOCTORS LIST" visible="false">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
@@ -73,7 +73,7 @@
             </HBox>
 
             <HBox>
-                <Button fx:id="haveButton" minWidth="150" onAction="#onHaveClicked" text="HAVE" visible="false">
+                <Button fx:id="haveButton" minWidth="150" onAction="#onHaveClicked" text="MEDICATION LIST" visible="false">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
@@ -142,7 +142,7 @@
                         <Image url="@Images/prescribe.png">
                         </Image>
                     </ImageView>
-                    <Label text="Prescribe">
+                    <Label text="Order">
                         <font>
                             <Font size="12.0"/>
                         </font>

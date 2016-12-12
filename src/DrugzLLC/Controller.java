@@ -262,7 +262,7 @@ public class Controller implements Initializable {
         Patient patient = patientTableView.getSelectionModel().getSelectedItem();
         if (patient != null) {
             onDoctorsClicked();
-            userFeedBackLabel.setText("Showing which doctor(s) patient : " + patient.getLastName() + " sees.");
+            userFeedBackLabel.setText("Showing doctor(s) patient : " + patient.getLastName() + " sees.");
             doctorTableView.setItems(getDoctorObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Doctors.name(),
@@ -280,7 +280,7 @@ public class Controller implements Initializable {
         Patient patient = patientTableView.getSelectionModel().getSelectedItem();
         if (patient != null) {
             onPrescriptionsClicked();
-            userFeedBackLabel.setText("Showing which prescription(s) patient : " + patient.getLastName() + " has.");
+            userFeedBackLabel.setText("Showing prescription(s) patient : " + patient.getLastName() + " has.");
             prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Prescriptions.name(),
@@ -299,7 +299,7 @@ public class Controller implements Initializable {
         Doctor doctor = doctorTableView.getSelectionModel().getSelectedItem();
         if (doctor != null) {
             onPrescriptionsClicked();
-            userFeedBackLabel.setText("Showing which prescription(s) doctor : " + doctor.getName() + " prescribes.");
+            userFeedBackLabel.setText("Showing prescription(s) doctor : " + doctor.getName() + " prescribes.");
             prescriptionTableView.setItems(getPrescriptionObservableList(JDBCTools.getResultSetNaturalJoinInDB(
                     Main.getConnection(),
                     Table.Prescriptions.name(),

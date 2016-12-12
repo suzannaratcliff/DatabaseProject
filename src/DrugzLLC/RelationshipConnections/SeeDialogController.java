@@ -22,7 +22,7 @@ public class SeeDialogController {
 
     public void setDialogStage(Stage dialogStage, Patient patient) {
         this.dialogStage = dialogStage;
-        dialogTitle.setText("Link who patient : " + patient.getLastName() + " sees.");
+        dialogTitle.setText("Add doctor who patient : " + patient.getLastName() + " sees.");
         this.patient = patient;
         initDoctorTableView(doctorTableView);
         doctorTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
